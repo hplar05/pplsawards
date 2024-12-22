@@ -43,8 +43,8 @@ export function Navbar() {
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md transition-colors duration-300 flex justify-center items-center">
-      <div className="container flex h-20 items-center justify-between">
+    <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md transition-colors duration-300 flex justify-center items-center ">
+      <div className="container flex h-20 items-center justify-between max-md:mx-6">
         <Link href="/" className="flex items-center space-x-2">
           <Image className="" src={Logo} alt="Logo" height={50} width={50} />
           <span className="font-bold text-2xl">PPSLAWARDS</span>
