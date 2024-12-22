@@ -16,7 +16,7 @@ const geistMono = localFont({
 export const metadata: Metadata = {
   title: "Admin - Philippine Public Service Leadership Awards",
   description:
-    "Philippine Public Service Leadership Awards is honor individuals who make outstanding contributions and whos  accomplished are models of exemplary public service for those dedicated to the public good-now and in the future.",
+    "Philippine Public Service Leadership Awards is honor individuals who make outstanding contributions and whos accomplished are models of exemplary public service for those dedicated to the public good-now and in the future.",
 };
 
 export default function RootLayout({
