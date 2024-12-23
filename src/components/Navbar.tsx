@@ -1,11 +1,12 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { Menu, X } from "lucide-react";
 import Image from "next/image";
 import Logo from "/public/logo.png";
+import { usePathname } from "next/navigation";
 
 const navItems = [
   { href: "/", label: "Home" },
@@ -16,34 +17,15 @@ const navItems = [
 ];
 
 export function Navbar() {
-  const [activeSection, setActiveSection] = useState("");
+  const pathname = usePathname(); // Get the current pathname
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      (entries) => {
-        entries.forEach((entry) => {
-          if (entry.isIntersecting) {
-            setActiveSection(entry.target.id);
-          }
-        });
-      },
-      { threshold: 0.5 }
-    );
-
-    document.querySelectorAll("section[id]").forEach((section) => {
-      observer.observe(section);
-    });
-
-    return () => observer.disconnect();
-  }, []);
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   return (
-    <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md transition-colors duration-300 flex justify-center items-center ">
+    <header className="sticky top-0 z-50 w-full border-b bg-white/80 backdrop-blur-md transition-colors duration-300 flex justify-center items-center">
       <div className="container flex h-20 items-center justify-between max-md:mx-6">
         <Link href="/" className="flex items-center space-x-2">
           <Image className="" src={Logo} alt="Logo" height={50} width={50} />
@@ -55,13 +37,11 @@ export function Navbar() {
               key={item.href}
               href={item.href}
               className={`relative px-4 py-3 text-base font-medium transition-colors hover:text-yellow-500 ${
-                activeSection === item.href.slice(1)
-                  ? "text-yellow-500"
-                  : "text-gray-600"
+                pathname === item.href ? "text-yellow-500" : "text-gray-600"
               }`}
             >
               {item.label}
-              {activeSection === item.href.slice(1) && (
+              {pathname === item.href && (
                 <motion.div
                   className="absolute bottom-0 left-0 right-0 h-1 bg-yellow-500"
                   layoutId="activeSection"
@@ -94,9 +74,7 @@ export function Navbar() {
                   key={item.href}
                   href={item.href}
                   className={`px-6 py-3 text-base font-medium transition-colors hover:text-yellow-500 ${
-                    activeSection === item.href.slice(1)
-                      ? "text-yellow-500"
-                      : "text-gray-600"
+                    pathname === item.href ? "text-yellow-500" : "text-gray-600"
                   }`}
                   onClick={() => setIsMenuOpen(false)}
                 >
