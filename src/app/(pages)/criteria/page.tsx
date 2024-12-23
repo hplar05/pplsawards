@@ -7,7 +7,7 @@ export default function Criteria() {
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold flex items-center">
             <Award className="mr-4" size={40} />
-            Southeast Asia Business Excellence Awards
+            Philippine Public Service Leadership Awards
           </h1>
         </div>
       </header>
@@ -16,11 +16,11 @@ export default function Criteria() {
         <section className="mb-12" id="#criteria">
           <h2 className="text-2xl font-semibold mb-4">Eligibility Criteria</h2>
           <p className="mb-4">
-            To be eligible to receive the Southeast Asia Business Excellence
+            To be eligible to receive the Philippine Public Service Leadership
             Awards, a company must qualify for all six (6) criteria. The
             validation of the survey result is done under the supervision of the
             Southeast Asia Council and research team. A company that is
-            conferred the Southeast Asia Business Excellence is automatically
+            conferred the Philippine Public Service Leadership is automatically
             certified as best.
           </p>
           <div className="grid md:grid-cols-2 gap-6">

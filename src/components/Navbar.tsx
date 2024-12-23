@@ -68,7 +68,9 @@ export function Navbar() {
             transition={{ duration: 0.3 }}
             className="md:hidden bg-white border-t"
           >
-            <nav className="flex flex-col py-4">
+            <nav className="flex flex-col py-4 space-y-2">
+              {" "}
+              {/* Added space-y-2 for better vertical spacing */}
               {navItems.map((item) => (
                 <Link
                   key={item.href}
