@@ -37,9 +37,9 @@ export default function AboutUs() {
               <Users className="text-yellow-500 mb-4" size={48} />
               <h3 className="text-xl font-semibold mb-2">Inspiring Stories</h3>
               <p>
-                We've uncovered hundreds of inspirational stories of Filipino
-                Public Servants who sought to make a difference in the lives of
-                their constituents, their community, and the country.
+                We&apos;ve uncovered hundreds of inspirational stories of
+                Filipino Public Servants who sought to make a difference in the
+                lives of their constituents, their community, and the country.
               </p>
             </div>
             <div className="bg-white p-6 rounded-lg shadow-md flex flex-col items-center text-center">
@@ -82,10 +82,10 @@ export default function AboutUs() {
             Join Us in Celebrating Excellence
           </h2>
           <p className="text-lg mb-6">
-            Whether you're a public servant with a story to share or someone who
-            wants to nominate an outstanding individual, we invite you to be
-            part of this inspiring journey. Together, we can shine a light on
-            the remarkable work being done in public service across the
+            Whether you&apos;re a public servant with a story to share or
+            someone who wants to nominate an outstanding individual, we invite
+            you to be part of this inspiring journey. Together, we can shine a
+            light on the remarkable work being done in public service across the
             Philippines.
           </p>
           <Link
