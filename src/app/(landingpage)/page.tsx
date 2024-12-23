@@ -12,7 +12,6 @@ export default function Home() {
   // Set the target date for the countdown (e.g., 30 days from now)
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + 30);
-
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
@@ -34,10 +33,10 @@ export default function Home() {
                 </p>
               </div>
               <div className="w-full max-w-sm">
-                <Countdown targetDate={targetDate} />
+                <Countdown />
               </div>
               <p className="text-sm text-gray-500">
-                Time left until nominations close
+                Time left until March 15, 2025
               </p>
               <div className="space-x-4">
                 <Link

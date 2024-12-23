@@ -2,23 +2,24 @@
 
 import { useState, useEffect } from "react";
 
-interface CountdownProps {
-  targetDate: Date;
-}
-
 interface TimeLeft {
-  days?: number;
-  hours?: number;
-  minutes?: number;
-  seconds?: number;
+  days: number;
+  hours: number;
+  minutes: number;
+  seconds: number;
 }
 
-export function Countdown({ targetDate }: CountdownProps) {
-  const [timeLeft, setTimeLeft] = useState<TimeLeft>(calculateTimeLeft());
+export function Countdown() {
+  const targetDate = new Date("2025-03-15T00:00:00").getTime();
 
-  function calculateTimeLeft(): TimeLeft {
-    const difference = +targetDate - +new Date();
-    let timeLeft: TimeLeft = {};
+  // Initialize the state with the type TimeLeft
+  const [timeLeft, setTimeLeft] = useState<Partial<TimeLeft>>(
+    calculateTimeLeft()
+  );
+
+  function calculateTimeLeft(): Partial<TimeLeft> {
+    const difference = targetDate - new Date().getTime();
+    let timeLeft: Partial<TimeLeft> = {};
 
     if (difference > 0) {
       timeLeft = {
@@ -41,14 +42,15 @@ export function Countdown({ targetDate }: CountdownProps) {
   });
 
   const timerComponents = Object.keys(timeLeft).map((interval) => {
-    const key = interval as keyof TimeLeft; // Explicitly cast `interval` as a key of TimeLeft
-    if (!timeLeft[key]) {
+    const value = timeLeft[interval as keyof TimeLeft]; // Type-safe access
+
+    if (!value) {
       return null;
     }
 
     return (
       <span className="flex flex-col items-center mx-2" key={interval}>
-        <span className="text-4xl font-bold">{timeLeft[key]}</span>
+        <span className="text-4xl font-bold">{value}</span>
         <span className="text-sm uppercase">{interval}</span>
       </span>
     );
@@ -56,7 +58,11 @@ export function Countdown({ targetDate }: CountdownProps) {
 
   return (
     <div className="flex justify-center items-center space-x-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg">
-      {timerComponents.length ? timerComponents : <span>Times up!</span>}
+      {timerComponents.filter(Boolean).length ? (
+        timerComponents
+      ) : (
+        <span>Time&apos;s up!</span>
+      )}
     </div>
   );
 }
