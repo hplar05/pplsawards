@@ -7,6 +7,7 @@ import { Countdown } from "@/components/Countdown";
 import { FAQ } from "@/components/Faqs";
 import { motion } from "framer-motion";
 import { VideoSection } from "@/components/VideoSection";
+import { LogoCarousel } from "@/components/LogoCarousel";
 
 export default function Home() {
   // Set the target date for the countdown (e.g., 30 days from now)
@@ -90,6 +91,22 @@ export default function Home() {
                 </motion.div>
               ))}
             </div>
+          </div>
+        </motion.section>
+
+        <motion.section
+          initial={{ opacity: 0 }}
+          whileInView={{ opacity: 1 }}
+          transition={{ duration: 0.5 }}
+          viewport={{ once: true }}
+          id="partners"
+          className="w-full py-12 md:py-24 lg:py-32 bg-gray-50 flex justify-center items-center"
+        >
+          <div className="container px-4 md:px-6">
+            <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+              Our Partners
+            </h2>
+            <LogoCarousel />
           </div>
         </motion.section>
 
