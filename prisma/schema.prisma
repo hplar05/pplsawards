@@ -1,0 +1,63 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String    @id @default(cuid())
+  email     String    @unique
+  image     String?
+  password  String
+  name      String?
+  createdAt DateTime  @default(now())
+  updateUt  DateTime? @updatedAt
+}
+
+model Awardees {
+  id          String       @id @default(cuid())
+  fullname    String
+  occupation  String
+  area        String
+  images      String?
+  description String
+  yearOfAward String
+  categories  Cateregories @default(Local_Governance)
+}
+
+enum Cateregories {
+  Local_Governance
+  Education
+  Healthcare
+  Disaster_Management
+  Social_Welfare
+  Environmental_Conservation
+}
+
+model Countdown {
+  id    String @id @default(cuid())
+  timer String
+}
+
+model OurPartners {
+  id      String  @id @default(cuid())
+  logoImg String?
+}
+
+model VideoPresentation {
+  id        String  @id @default(cuid())
+  videoLink String?
+}
+
+model WhatOurClient {
+  id       String  @id @default(cuid())
+  comment  String?
+  fullname String?
+  position String?
+}

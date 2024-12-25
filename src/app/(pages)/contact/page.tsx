@@ -6,7 +6,7 @@ export default function ContactPage() {
       <header className="bg-yellow-500 text-white py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold flex items-center">
-            <Award className="mr-4" size={40} />
+            <Award className="mr-4 max-md:hidden" size={40} />
             Get in touch with the Philippine Public Service Leadership Awards
             team
           </h1>
