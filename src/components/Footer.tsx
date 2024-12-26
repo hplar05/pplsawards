@@ -18,11 +18,11 @@ export const Footer = () => {
           </p>
         </div>
         <nav className="mt-4 md:mt-0 flex gap-4">
-          <Link href="#" className="text-sm hover:underline underline-offset-4">
-            Privacy Policy
-          </Link>
-          <Link href="#" className="text-sm hover:underline underline-offset-4">
-            Terms of Service
+          <Link
+            href="/login"
+            className="text-sm hover:underline underline-offset-4"
+          >
+            Admin Login
           </Link>
         </nav>
       </div>

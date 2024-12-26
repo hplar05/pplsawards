@@ -12,10 +12,11 @@ interface TimeLeft {
 export function Countdown() {
   const targetDate = new Date("2025-03-15T00:00:00").getTime();
 
-  // Initialize the state with the type TimeLeft
-  const [timeLeft, setTimeLeft] = useState<Partial<TimeLeft>>(
-    calculateTimeLeft()
-  );
+  // State for time left
+  const [timeLeft, setTimeLeft] = useState<Partial<TimeLeft>>({});
+
+  // State to check if component is mounted
+  const [isMounted, setIsMounted] = useState(false);
 
   function calculateTimeLeft(): Partial<TimeLeft> {
     const difference = targetDate - new Date().getTime();
@@ -34,17 +35,25 @@ export function Countdown() {
   }
 
   useEffect(() => {
-    const timer = setTimeout(() => {
+    // Mark the component as mounted
+    setIsMounted(true);
+
+    const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
-    return () => clearTimeout(timer);
-  });
+    return () => clearInterval(timer);
+  }, []);
+
+  if (!isMounted) {
+    // Prevent rendering on the server
+    return null;
+  }
 
   const timerComponents = Object.keys(timeLeft).map((interval) => {
     const value = timeLeft[interval as keyof TimeLeft]; // Type-safe access
 
-    if (!value) {
+    if (!value && value !== 0) {
       return null;
     }
 
