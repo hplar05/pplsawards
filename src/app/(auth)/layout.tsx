@@ -1,6 +1,10 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
+import { Toaster } from "react-hot-toast";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { redirect } from "next/navigation";
 // import { Navbar } from "@/components/Navbar";
 // import { Footer } from "@/components/Footer";
 
@@ -21,16 +25,20 @@ export const metadata: Metadata = {
     "Philippine Public Service Leadership Awards is honor individuals who make outstanding contributions and whos  accomplished are models of exemplary public service for those dedicated to the public good-now and in the future.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
+  if (session) redirect("/admin/dashboard");
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
+        <Toaster position="top-right" />
         {children}
       </body>
     </html>

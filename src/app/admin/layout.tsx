@@ -1,6 +1,12 @@
 import type { Metadata } from "next";
 import localFont from "next/font/local";
 import "../globals.css";
+import { redirect } from "next/navigation";
+import { getServerSession } from "next-auth";
+import { authOptions } from "@/lib/auth";
+import { Sidebar } from "@/components/Sidebar";
+import { Toaster } from "react-hot-toast";
+import Provider from "@/components/Provider";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -19,17 +25,26 @@ export const metadata: Metadata = {
     "Philippine Public Service Leadership Awards is honor individuals who make outstanding contributions and whos accomplished are models of exemplary public service for those dedicated to the public good-now and in the future.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  const session = await getServerSession(authOptions);
+
+  if (!session) redirect("/login");
   return (
     <html lang="en">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
-        {children}
+        <Provider>
+          <Toaster />
+          <div className="flex h-screen bg-gray-100">
+            <Sidebar />
+            <div className="flex-1 overflow-auto">{children}</div>
+          </div>
+        </Provider>
       </body>
     </html>
   );
