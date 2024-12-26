@@ -4,9 +4,10 @@ import "../globals.css";
 import { redirect } from "next/navigation";
 import { getServerSession } from "next-auth";
 import { authOptions } from "@/lib/auth";
-import { Sidebar } from "@/components/Sidebar";
+
 import { Toaster } from "react-hot-toast";
 import Provider from "@/components/Provider";
+import { Sidebar } from "./_components/Sidebar";
 
 const geistSans = localFont({
   src: "../fonts/GeistVF.woff",
@@ -39,7 +40,7 @@ export default async function RootLayout({
         className={`${geistSans.variable} ${geistMono.variable} antialiased`}
       >
         <Provider>
-          <Toaster />
+          <Toaster position="top-right" />
           <div className="flex h-screen bg-gray-100">
             <Sidebar />
             <div className="flex-1 overflow-auto">{children}</div>

@@ -1,217 +1,193 @@
 "use client";
 
 import { useState } from "react";
+import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
 import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-import { Award, Users, Trophy, Search, Plus } from "lucide-react";
+  Award,
+  Users,
+  Trophy,
+  TrendingUp,
+  Calendar,
+  Plus,
+  FileText,
+  Mail,
+} from "lucide-react";
+import Link from "next/link";
 
-// Mock data for awardees
-const awardees = [
+// Mock data for recent activities
+const recentActivities = [
   {
     id: 1,
-    name: "John Doe",
+    action: "New awardee added",
     category: "Innovation",
-    year: 2023,
-    image: "/placeholder.svg?height=100&width=100",
+    timestamp: "2 hours ago",
   },
   {
     id: 2,
-    name: "Jane Smith",
+    action: "Category updated",
     category: "Leadership",
-    year: 2023,
-    image: "/placeholder.svg?height=100&width=100",
+    timestamp: "5 hours ago",
   },
   {
     id: 3,
-    name: "Bob Johnson",
+    action: "Nomination received",
     category: "Sustainability",
-    year: 2022,
-    image: "/placeholder.svg?height=100&width=100",
+    timestamp: "1 day ago",
   },
   {
     id: 4,
-    name: "Alice Brown",
-    category: "Community Service",
-    year: 2022,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 5,
-    name: "Charlie Davis",
-    category: "Innovation",
-    year: 2021,
-    image: "/placeholder.svg?height=100&width=100",
+    action: "Award ceremony scheduled",
+    category: "All",
+    timestamp: "2 days ago",
   },
 ];
 
 export default function AdminDashboard() {
-  const [searchTerm, setSearchTerm] = useState("");
-  const [selectedYear, setSelectedYear] = useState("All");
-  const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(false);
 
-  const filteredAwardees = awardees.filter(
-    (awardee) =>
-      awardee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedYear === "All" || awardee.year.toString() === selectedYear) &&
-      (selectedCategory === "All" || awardee.category === selectedCategory)
-  );
-
-  const years = [
-    "All",
-    ...Array.from(new Set(awardees.map((a) => a.year.toString()))),
-  ];
-  const categories = [
-    "All",
-    ...Array.from(new Set(awardees.map((a) => a.category))),
-  ];
+  const handleQuickAction = (action: string) => {
+    setIsLoading(true);
+    // Simulate an API call
+    setTimeout(() => {
+      setIsLoading(false);
+      console.log(`Quick action triggered: ${action}`);
+    }, 1000);
+  };
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-white shadow">
-        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-          <h1 className="text-3xl font-bold text-gray-900">Admin Dashboard</h1>
-        </div>
-      </header>
-      <main className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
-        <div className="px-4 py-6 sm:px-0">
-          <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Total Awardees
-                </CardTitle>
-                <Users className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">{awardees.length}</div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Categories
-                </CardTitle>
-                <Trophy className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {categories.length - 1}
-                </div>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-                <CardTitle className="text-sm font-medium">
-                  Latest Year
-                </CardTitle>
-                <Award className="h-4 w-4 text-muted-foreground" />
-              </CardHeader>
-              <CardContent>
-                <div className="text-2xl font-bold">
-                  {Math.max(...awardees.map((a) => a.year))}
-                </div>
-              </CardContent>
-            </Card>
-          </div>
+    <div className="min-h-screen bg-gray-50 p-8">
+      <motion.div
+        initial={{ opacity: 0, y: 20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.5 }}
+        className="max-w-7xl mx-auto"
+      >
+        <h1 className="text-3xl font-bold text-gray-900 mb-8">
+          Admin Dashboard
+        </h1>
 
-          <div className="mt-8">
-            <div className="mb-4 flex flex-col sm:flex-row sm:items-center sm:justify-between">
-              <h2 className="text-2xl font-semibold text-gray-900 mb-4 sm:mb-0">
-                Awardees
-              </h2>
-              <Button className="w-full sm:w-auto">
-                <Plus className="mr-2 h-4 w-4" /> Add New Awardee
-              </Button>
-            </div>
-            <div className="mb-4 grid grid-cols-1 sm:grid-cols-3 gap-4">
-              <div className="relative">
-                <Search className="absolute left-2 top-2.5 h-4 w-4 text-muted-foreground" />
-                <Input
-                  placeholder="Search awardees"
-                  value={searchTerm}
-                  onChange={(e) => setSearchTerm(e.target.value)}
-                  className="pl-8"
-                />
-              </div>
-              <Select value={selectedYear} onValueChange={setSelectedYear}>
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Year" />
-                </SelectTrigger>
-                <SelectContent>
-                  {years.map((year) => (
-                    <SelectItem key={year} value={year}>
-                      {year}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-              <Select
-                value={selectedCategory}
-                onValueChange={setSelectedCategory}
-              >
-                <SelectTrigger>
-                  <SelectValue placeholder="Select Category" />
-                </SelectTrigger>
-                <SelectContent>
-                  {categories.map((category) => (
-                    <SelectItem key={category} value={category}>
-                      {category}
-                    </SelectItem>
-                  ))}
-                </SelectContent>
-              </Select>
-            </div>
-            <div className="bg-white shadow overflow-hidden sm:rounded-md">
-              <ul className="divide-y divide-gray-200">
-                {filteredAwardees.map((awardee) => (
-                  <li key={awardee.id}>
-                    <div className="px-4 py-4 flex items-center sm:px-6">
-                      <div className="min-w-0 flex-1 sm:flex sm:items-center sm:justify-between">
-                        <div className="flex items-center">
-                          <Avatar className="mr-4">
-                            <AvatarImage
-                              src={awardee.image}
-                              alt={awardee.name}
-                            />
-                            <AvatarFallback>
-                              {awardee.name
-                                .split(" ")
-                                .map((n) => n[0])
-                                .join("")}
-                            </AvatarFallback>
-                          </Avatar>
-                          <div>
-                            <p className="font-medium text-gray-900 truncate">
-                              {awardee.name}
-                            </p>
-                            <p className="mt-1 text-sm text-gray-500">
-                              {awardee.category} - {awardee.year}
-                            </p>
-                          </div>
-                        </div>
-                      </div>
-                      <div className="ml-5 flex-shrink-0">
-                        <Button variant="outline" size="sm">
-                          View
-                        </Button>
-                      </div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+          <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Total Awardees
+              </CardTitle>
+              <Users className="h-4 w-4" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">1,234</div>
+              <p className="text-xs text-blue-100">+5% from last month</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Categories</CardTitle>
+              <Trophy className="h-4 w-4" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">15</div>
+              <p className="text-xs text-green-100">2 new categories added</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">Nominations</CardTitle>
+              <Award className="h-4 w-4" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">3,567</div>
+              <p className="text-xs text-purple-100">+12% from last year</p>
+            </CardContent>
+          </Card>
+          <Card className="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
+            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
+              <CardTitle className="text-sm font-medium">
+                Engagement Rate
+              </CardTitle>
+              <TrendingUp className="h-4 w-4" />
+            </CardHeader>
+            <CardContent>
+              <div className="text-2xl font-bold">78%</div>
+              <p className="text-xs text-yellow-100">+3% from last week</p>
+            </CardContent>
+          </Card>
+        </div>
+
+        <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
+          <Card className="lg:col-span-2">
+            <CardHeader>
+              <CardTitle>Recent Activities</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <ul className="space-y-4">
+                {recentActivities.map((activity) => (
+                  <li
+                    key={activity.id}
+                    className="bg-white p-4 rounded-lg shadow"
+                  >
+                    <div className="flex items-center justify-between">
+                      <span className="font-medium">{activity.action}</span>
+                      <span className="text-sm text-gray-500">
+                        {activity.timestamp}
+                      </span>
                     </div>
+                    <p className="text-sm text-gray-600 mt-1">
+                      Category: {activity.category}
+                    </p>
                   </li>
                 ))}
               </ul>
-            </div>
-          </div>
+            </CardContent>
+          </Card>
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Quick Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="space-y-4">
+              <Button
+                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                onClick={() => handleQuickAction("Add Awardee")}
+                disabled={isLoading}
+              >
+                <Plus className="mr-2 h-4 w-4" /> Add New Awardee
+              </Button>
+              <Button
+                className="w-full bg-green-500 hover:bg-green-600 text-white"
+                onClick={() => handleQuickAction("Schedule Ceremony")}
+                disabled={isLoading}
+              >
+                <Calendar className="mr-2 h-4 w-4" /> Schedule Ceremony
+              </Button>
+              <Button
+                className="w-full bg-purple-500 hover:bg-purple-600 text-white"
+                onClick={() => handleQuickAction("Generate Report")}
+                disabled={isLoading}
+              >
+                <FileText className="mr-2 h-4 w-4" /> Generate Report
+              </Button>
+              <Button
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white"
+                onClick={() => handleQuickAction("Send Newsletter")}
+                disabled={isLoading}
+              >
+                <Mail className="mr-2 h-4 w-4" /> Send Newsletter
+              </Button>
+            </CardContent>
+          </Card>
         </div>
-      </main>
+
+        <div className="mt-8 text-center">
+          <Link
+            href="/admin/awardees"
+            className="text-blue-500 hover:underline"
+          >
+            View All Awardees
+          </Link>
+        </div>
+      </motion.div>
     </div>
   );
 }
