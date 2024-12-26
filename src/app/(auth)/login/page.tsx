@@ -31,6 +31,8 @@ export default function LoginPage() {
       callbackUrl: "/admin/dashboard",
     });
 
+    console.log("Login result:", result);
+
     if (result?.error) {
       setError("Invalid email or password");
       toast.error("Invalid email or password!");
