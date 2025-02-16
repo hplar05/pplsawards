@@ -8,8 +8,39 @@ import { FAQ } from "@/components/Faqs";
 import { motion } from "framer-motion";
 import { VideoSection } from "@/components/VideoSection";
 import { LogoCarousel } from "@/components/LogoCarousel";
+import { useEffect, useState } from "react";
+
+type Awardee = {
+  id: string;
+  fullname: string;
+  occupation: string;
+  images: string;
+  categories: string;
+};
 
 export default function Home() {
+  const [recentWinners, setRecentWinners] = useState<Awardee[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchRecentWinners = async () => {
+      try {
+        const response = await fetch("/api/awardees?limit=8&sort=desc");
+        if (!response.ok) {
+          throw new Error("Failed to fetch recent winners");
+        }
+        const data = await response.json();
+        setRecentWinners(data);
+      } catch (err) {
+        setError("Failed to load recent winners. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchRecentWinners();
+  }, []);
   // Set the target date for the countdown (e.g., 30 days from now)
   const targetDate = new Date();
   targetDate.setDate(targetDate.getDate() + 30);
@@ -246,32 +277,42 @@ export default function Home() {
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
               Recent Award Winners
             </h2>
-            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-              {[1, 2, 3, 4, 5, 6, 7, 8].map((i) => (
-                <motion.div
-                  key={i}
-                  initial={{ opacity: 0, scale: 0.9 }}
-                  whileInView={{ opacity: 1, scale: 1 }}
-                  transition={{ duration: 0.3, delay: i * 0.05 }}
-                  viewport={{ once: true }}
-                  className="flex flex-col items-center"
-                >
-                  <div className="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden">
-                    <Image
-                      src={`/placeholder.svg?height=96&width=96`}
-                      alt={`Winner ${i}`}
-                      width={96}
-                      height={96}
-                      className="object-cover"
-                    />
-                  </div>
-                  <h3 className="font-semibold text-center">Winner Name</h3>
-                  <p className="text-sm text-gray-500 text-center">
-                    Award Category
-                  </p>
-                </motion.div>
-              ))}
-            </div>
+            {isLoading ? (
+              <p className="text-center">Loading recent winners...</p>
+            ) : error ? (
+              <p className="text-center text-red-500">{error}</p>
+            ) : (
+              <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+                {recentWinners.map((winner, i) => (
+                  <motion.div
+                    key={winner.id}
+                    initial={{ opacity: 0, scale: 0.9 }}
+                    whileInView={{ opacity: 1, scale: 1 }}
+                    transition={{ duration: 0.3, delay: i * 0.05 }}
+                    viewport={{ once: true }}
+                    className="flex flex-col items-center"
+                  >
+                    <div className="w-24 h-24 rounded-full bg-gray-200 mb-4 overflow-hidden">
+                      <Image
+                        src={
+                          winner.images || `/placeholder.svg?height=96&width=96`
+                        }
+                        alt={winner.fullname}
+                        width={96}
+                        height={96}
+                        className="object-cover"
+                      />
+                    </div>
+                    <h3 className="font-semibold text-center">
+                      {winner.fullname}
+                    </h3>
+                    <p className="text-sm text-gray-500 text-center">
+                      {winner.categories}
+                    </p>
+                  </motion.div>
+                ))}
+              </div>
+            )}
           </div>
         </motion.section>
 

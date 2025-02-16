@@ -1,69 +1,73 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 
-const partnerLogos = [
-  { name: "Partner 1", src: "/placeholder.svg?height=100&width=200" },
-  { name: "Partner 2", src: "/placeholder.svg?height=100&width=200" },
-  { name: "Partner 3", src: "/placeholder.svg?height=100&width=200" },
-  { name: "Partner 4", src: "/placeholder.svg?height=100&width=200" },
-  { name: "Partner 5", src: "/placeholder.svg?height=100&width=200" },
-  { name: "Partner 6", src: "/placeholder.svg?height=100&width=200" },
-];
+type Partner = {
+  id: string;
+  logoImg: string;
+};
 
 export function LogoCarousel() {
-  const carouselRef = useRef<HTMLDivElement>(null);
+  const [partners, setPartners] = useState<Partner[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    const carousel = carouselRef.current;
-    if (!carousel) return;
-
-    let scrollInterval: NodeJS.Timeout;
-
-    const startScroll = () => {
-      scrollInterval = setInterval(() => {
-        if (
-          carousel.scrollLeft + carousel.clientWidth >=
-          carousel.scrollWidth
-        ) {
-          carousel.scrollLeft = 0;
-        } else {
-          carousel.scrollLeft += 1;
+    const fetchPartners = async () => {
+      try {
+        const response = await fetch("/api/partners");
+        if (!response.ok) {
+          throw new Error("Failed to fetch partners");
         }
-      }, 20);
+        const data = await response.json();
+        setPartners(data);
+      } catch (err) {
+        setError("Failed to load partners. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
     };
 
-    const stopScroll = () => {
-      clearInterval(scrollInterval);
-    };
-
-    startScroll();
-    carousel.addEventListener("mouseenter", stopScroll);
-    carousel.addEventListener("mouseleave", startScroll);
-
-    return () => {
-      stopScroll();
-      carousel.removeEventListener("mouseenter", stopScroll);
-      carousel.removeEventListener("mouseleave", startScroll);
-    };
+    fetchPartners();
   }, []);
 
+  if (isLoading) {
+    return <div>Loading partners...</div>;
+  }
+
+  if (error) {
+    return <div className="text-red-500">{error}</div>;
+  }
+
   return (
-    <div className="w-full overflow-hidden bg-white py-8">
-      <div ref={carouselRef} className="flex space-x-8 overflow-x-hidden">
-        {[...partnerLogos, ...partnerLogos].map((logo, index) => (
-          <div key={index} className="flex-shrink-0">
+    <div className="overflow-hidden">
+      <motion.div
+        className="flex space-x-8"
+        animate={{
+          x: [0, -1000],
+          transition: {
+            x: {
+              repeat: Number.POSITIVE_INFINITY,
+              repeatType: "loop",
+              duration: 20,
+              ease: "linear",
+            },
+          },
+        }}
+      >
+        {partners.map((partner) => (
+          <div key={partner.id} className="flex-shrink-0">
             <Image
-              src={logo.src}
-              alt={logo.name}
-              width={200}
+              src={partner.logoImg || "/placeholder.svg"}
+              alt="Partner logo"
+              width={100}
               height={100}
-              className="object-contain"
             />
           </div>
         ))}
-      </div>
+      </motion.div>
     </div>
   );
 }

@@ -3,7 +3,7 @@ import { Award, CheckCircle } from "lucide-react";
 export default function Criteria() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-yellow-500 text-white py-12">
+      <header className="bg-yellow-600 text-white py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold flex items-center">
             <Award className="mr-4 max-md:hidden" size={40} />
@@ -13,47 +13,47 @@ export default function Criteria() {
       </header>
 
       <main className="container mx-auto px-4 py-12">
-        <section className="mb-12" id="#criteria">
+        <section className="mb-12" id="criteria">
           <h2 className="text-2xl font-semibold mb-4">Eligibility Criteria</h2>
           <p className="mb-4">
-            To be eligible to receive the Philippine Public Service Leadership
-            Awards, a company must qualify for all six (6) criteria. The
-            validation of the survey result is done under the supervision of the
-            Southeast Asia Council and research team. A company that is
-            conferred the Philippine Public Service Leadership is automatically
-            certified as best.
+            To be eligible for the Philippine Public Service Leadership Awards,
+            an individual or organization must meet all six (6) criteria. The
+            validation of nominations and supporting documentation is conducted
+            under the supervision of the Awards Council and research team.
+            Recipients of the Philippine Public Service Leadership Award are
+            recognized as exemplars of public service leadership.
           </p>
           <div className="grid md:grid-cols-2 gap-6">
             {[
               {
-                title: "Innovative Business Practices",
+                title: "Innovative Service Delivery",
                 description:
-                  "The company should have novel in-house business practices that help increase its productivity. These practices should be potentially replicable by other companies. The company should be active in professional associations to stay aware of industry trends.",
+                  "The nominee should demonstrate novel approaches and practices in delivering public services that enhance efficiency, effectiveness, and citizen experience. These practices should be potentially replicable by other public service entities. Active engagement in professional associations and knowledge sharing networks is encouraged.",
               },
               {
-                title: "Quality of Products and Services",
+                title: "Quality of Service and Outcomes",
                 description:
-                  "The company should deliver products/services that are durable, consistent, and in conformity with company claims. Timely delivery and provision of after-sales services are also considered.",
+                  "The nominee should consistently deliver high-quality services that are reliable, accessible, and meet the needs of the community served. Measurable positive outcomes resulting from their service are essential.",
               },
               {
-                title: "Value Proposition and Pricing",
+                title: "Value and Resource Management",
                 description:
-                  "The company should practice fair and just value pricing, assuring its clientele of value for money results.",
+                  "The nominee should demonstrate responsible and efficient use of public resources, ensuring value for money and maximizing impact for the community. Transparency and accountability in resource management are crucial.",
               },
               {
-                title: "Customer Concern & Engagement",
+                title: "Community Engagement and Responsiveness",
                 description:
-                  "The company should demonstrate significant concern for its clients needs and satisfaction.",
+                  "The nominee should demonstrate genuine concern for the needs and satisfaction of the community served. Proactive engagement with citizens, responsiveness to feedback, and a commitment to inclusivity are vital.",
               },
               {
-                title: "Reputable and Ethical Business Image",
+                title: "Ethical Conduct and Public Trust",
                 description:
-                  "The companys clientele should have a good impression of the company and its products/services. The companys business model should guarantee its survival over a long period.",
+                  "The nominee should uphold the highest ethical standards in all aspects of their work, maintaining public trust and demonstrating integrity in their actions.",
               },
               {
-                title: "Truthfulness in Business Management",
+                title: "Leadership and Team Development",
                 description:
-                  "The company should provide great working opportunities and environment for its employees. Company rules and regulations should be reliable and just.",
+                  "The nominee should demonstrate strong leadership qualities, inspiring and motivating others to achieve shared goals. A commitment to developing future leaders and fostering a positive work environment is essential.",
               },
             ].map((criterion, index) => (
               <div key={index} className="bg-white p-6 rounded-lg shadow-md">
@@ -68,31 +68,37 @@ export default function Criteria() {
         </section>
 
         <section className="mb-12">
-          <h2 className="text-2xl font-semibold mb-4">Selection Process</h2>
+          <h2 className="text-2xl font-semibold mb-4">
+            Nomination and Selection Process
+          </h2>
           <p className="mb-4">
-            Candidates for the Southeast Asia Business Excellence Awards are
-            based on online nominations given by independent parties. The
-            selection process involves the following steps:
+            Candidates for the Philippine Public Service Leadership Awards are
+            nominated by members of the public, colleagues, or organizations
+            familiar with their work. The selection process involves the
+            following steps:
           </p>
           <ol className="list-decimal pl-6 space-y-2">
-            <li>Online nominations from different business categories</li>
             <li>
-              Market and online survey conducted by the Southeast Asia Awards
-              Council and research team
+              Open Nominations: Nominations are accepted through an online
+              platform, specifying the nominees contributions and providing
+              supporting documentation.
             </li>
             <li>
-              Survey methods include:
+              Review and Verification: The Awards Council and research team
+              review all nominations, verifying the information provided and
+              conducting further research as needed. This may include:
               <ul className="list-disc pl-6 mt-2">
-                <li>Online research</li>
-                <li>Customer feedbacks</li>
-                <li>Man-on-the-street interviews</li>
-                <li>Telephone interviews</li>
-                <li>Focused group discussions</li>
+                <li>Review of submitted documentation</li>
+                <li>Interviews with nominators and references</li>
+                <li>Public feedback and testimonials</li>
+                <li>Analysis of relevant data and performance metrics</li>
               </ul>
             </li>
             <li>
-              Careful validation of survey results by the Southeast Asia Awards
-              Council and research team
+              Selection and Award Presentation: A distinguished panel of judges,
+              comprised of leaders in public service, academia, and civil
+              society, reviews the shortlisted candidates and selects the award
+              recipients. The awards are presented at a prestigious ceremony.
             </li>
           </ol>
         </section>
@@ -100,14 +106,14 @@ export default function Criteria() {
         <section>
           <h2 className="text-2xl font-semibold mb-4">About the Awards</h2>
           <p>
-            The Southeast Asia Business Excellence Awards recognize companies
-            that demonstrate exceptional performance across various aspects of
-            business operations. By meeting all six criteria, awarded companies
-            are acknowledged for their innovative practices, quality products
-            and services, fair pricing, customer engagement, ethical business
-            conduct, and positive work environment. This prestigious award not
-            only certifies a companys excellence but also serves as a benchmark
-            for other businesses in the region.
+            The Philippine Public Service Leadership Awards recognize
+            individuals and organizations that demonstrate exceptional
+            leadership and commitment to serving the public. By meeting all six
+            criteria, award recipients are acknowledged for their innovative
+            service delivery, quality outcomes, responsible resource management,
+            community engagement, ethical conduct, and leadership. This
+            prestigious award not only celebrates their achievements but also
+            inspires others to strive for excellence in public service.
           </p>
         </section>
       </main>

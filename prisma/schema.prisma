@@ -29,6 +29,8 @@ model Awardees {
   description String
   yearOfAward String
   categories  Cateregories @default(Local_Governance)
+  createdAt   DateTime     @default(now())
+  updateUt    DateTime     @updatedAt
 }
 
 enum Cateregories {

@@ -1,51 +1,48 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import {
-  Award,
-  Users,
-  Trophy,
-  TrendingUp,
-  Calendar,
-  Plus,
-  FileText,
-  Mail,
-} from "lucide-react";
+import { Users, Trophy, Calendar, Plus, FileText, Mail } from "lucide-react";
 import Link from "next/link";
 
-// Mock data for recent activities
-const recentActivities = [
-  {
-    id: 1,
-    action: "New awardee added",
-    category: "Innovation",
-    timestamp: "2 hours ago",
-  },
-  {
-    id: 2,
-    action: "Category updated",
-    category: "Leadership",
-    timestamp: "5 hours ago",
-  },
-  {
-    id: 3,
-    action: "Nomination received",
-    category: "Sustainability",
-    timestamp: "1 day ago",
-  },
-  {
-    id: 4,
-    action: "Award ceremony scheduled",
-    category: "All",
-    timestamp: "2 days ago",
-  },
-];
+type DashboardData = {
+  totalAwardees: number;
+  categories: number;
+  recentAwardees: {
+    id: string;
+    fullname: string;
+    categories: string;
+    createdAt: string;
+  }[];
+};
 
 export default function AdminDashboard() {
-  const [isLoading, setIsLoading] = useState(false);
+  const [dashboardData, setDashboardData] = useState<DashboardData | null>(
+    null
+  );
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
+
+  useEffect(() => {
+    const fetchDashboardData = async () => {
+      try {
+        const response = await fetch("/api/admin/dashboard");
+        if (!response.ok) {
+          throw new Error("Failed to fetch dashboard data");
+        }
+        const data = await response.json();
+        setDashboardData(data);
+      } catch (err) {
+        setError("Failed to load dashboard data. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchDashboardData();
+  }, []);
 
   const handleQuickAction = (action: string) => {
     setIsLoading(true);
@@ -55,6 +52,22 @@ export default function AdminDashboard() {
       console.log(`Quick action triggered: ${action}`);
     }, 1000);
   };
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-50 p-8">
@@ -68,7 +81,7 @@ export default function AdminDashboard() {
           Admin Dashboard
         </h1>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
               <CardTitle className="text-sm font-medium">
@@ -77,8 +90,9 @@ export default function AdminDashboard() {
               <Users className="h-4 w-4" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">1,234</div>
-              <p className="text-xs text-blue-100">+5% from last month</p>
+              <div className="text-2xl font-bold">
+                {dashboardData?.totalAwardees}
+              </div>
             </CardContent>
           </Card>
           <Card className="bg-gradient-to-br from-green-500 to-green-600 text-white">
@@ -87,30 +101,9 @@ export default function AdminDashboard() {
               <Trophy className="h-4 w-4" />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">15</div>
-              <p className="text-xs text-green-100">2 new categories added</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-purple-500 to-purple-600 text-white">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">Nominations</CardTitle>
-              <Award className="h-4 w-4" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">3,567</div>
-              <p className="text-xs text-purple-100">+12% from last year</p>
-            </CardContent>
-          </Card>
-          <Card className="bg-gradient-to-br from-yellow-500 to-yellow-600 text-white">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">
-                Engagement Rate
-              </CardTitle>
-              <TrendingUp className="h-4 w-4" />
-            </CardHeader>
-            <CardContent>
-              <div className="text-2xl font-bold">78%</div>
-              <p className="text-xs text-yellow-100">+3% from last week</p>
+              <div className="text-2xl font-bold">
+                {dashboardData?.categories}
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -118,23 +111,23 @@ export default function AdminDashboard() {
         <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
           <Card className="lg:col-span-2">
             <CardHeader>
-              <CardTitle>Recent Activities</CardTitle>
+              <CardTitle>Recent Awardees</CardTitle>
             </CardHeader>
             <CardContent>
               <ul className="space-y-4">
-                {recentActivities.map((activity) => (
+                {dashboardData?.recentAwardees.map((awardee) => (
                   <li
-                    key={activity.id}
+                    key={awardee.id}
                     className="bg-white p-4 rounded-lg shadow"
                   >
                     <div className="flex items-center justify-between">
-                      <span className="font-medium">{activity.action}</span>
+                      <span className="font-medium">{awardee.fullname}</span>
                       <span className="text-sm text-gray-500">
-                        {activity.timestamp}
+                        {new Date(awardee.createdAt).toLocaleDateString()}
                       </span>
                     </div>
                     <p className="text-sm text-gray-600 mt-1">
-                      Category: {activity.category}
+                      Category: {awardee.categories}
                     </p>
                   </li>
                 ))}
