@@ -1,94 +1,80 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Award, Search, Briefcase, MapPin, ChevronDown } from "lucide-react";
 import Image from "next/image";
 
-// This would typically come from an API or database
-const awardees = [
-  {
-    id: 1,
-    name: "Maria Santos",
-    position: "City Mayor",
-    location: "Cebu City",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement: "Implemented innovative waste management program",
-    year: 2023,
-    category: "Local Governance",
-  },
-  {
-    id: 2,
-    name: "Juan dela Cruz",
-    position: "Public School Teacher",
-    location: "Manila",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement:
-      "Developed successful literacy program for underprivileged children",
-    year: 2023,
-    category: "Education",
-  },
-  {
-    id: 3,
-    name: "Elena Reyes",
-    position: "Public Health Officer",
-    location: "Davao City",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement: "Led successful COVID-19 vaccination campaign",
-    year: 2022,
-    category: "Healthcare",
-  },
-  {
-    id: 4,
-    name: "Roberto Lim",
-    position: "Barangay Captain",
-    location: "Quezon City",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement: "Initiated community-based disaster preparedness program",
-    year: 2022,
-    category: "Disaster Management",
-  },
-  {
-    id: 5,
-    name: "Amelia Tan",
-    position: "Social Welfare Officer",
-    location: "Iloilo City",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement:
-      "Created successful livelihood program for persons with disabilities",
-    year: 2021,
-    category: "Social Welfare",
-  },
-  {
-    id: 6,
-    name: "Carlos Bautista",
-    position: "Environmental Officer",
-    location: "Baguio City",
-    image: "/placeholder.svg?height=300&width=300",
-    achievement: "Spearheaded reforestation project in Cordillera region",
-    year: 2021,
-    category: "Environmental Conservation",
-  },
-];
+type Awardee = {
+  id: string;
+  fullname: string;
+  occupation: string;
+  area: string;
+  images: string;
+  description: string;
+  yearOfAward: string;
+  categories: string;
+};
 
 export default function AwardeesPage() {
+  const [awardees, setAwardees] = useState<Awardee[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isLoading, setIsLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
-  const years = ["All", ...Array.from(new Set(awardees.map((a) => a.year)))];
+  useEffect(() => {
+    const fetchAwardees = async () => {
+      try {
+        const response = await fetch("/api/awardees");
+        if (!response.ok) {
+          throw new Error("Failed to fetch awardees");
+        }
+        const data = await response.json();
+        setAwardees(data);
+      } catch (err) {
+        setError("Failed to load awardees. Please try again later.");
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchAwardees();
+  }, []);
+
+  const years = [
+    "All",
+    ...Array.from(new Set(awardees.map((a) => a.yearOfAward))),
+  ];
   const categories = [
     "All",
-    ...Array.from(new Set(awardees.map((a) => a.category))),
+    ...Array.from(new Set(awardees.map((a) => a.categories))),
   ];
 
   const filteredAwardees = awardees.filter(
     (awardee) =>
-      (awardee.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        awardee.position.toLowerCase().includes(searchTerm.toLowerCase()) ||
-        awardee.location.toLowerCase().includes(searchTerm.toLowerCase())) &&
-      (selectedYear === "All" || awardee.year === parseInt(selectedYear)) &&
-      (selectedCategory === "All" || awardee.category === selectedCategory)
+      (awardee.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        awardee.occupation.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        awardee.area.toLowerCase().includes(searchTerm.toLowerCase())) &&
+      (selectedYear === "All" || awardee.yearOfAward === selectedYear) &&
+      (selectedCategory === "All" || awardee.categories === selectedCategory)
   );
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        Loading...
+      </div>
+    );
+  }
+
+  if (error) {
+    return (
+      <div className="min-h-screen flex items-center justify-center text-red-500">
+        {error}
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-gray-100">
@@ -162,30 +148,34 @@ export default function AwardeesPage() {
             >
               <div className="relative h-64">
                 <Image
-                  src={awardee.image}
-                  alt={awardee.name}
+                  src={
+                    awardee.images || "/placeholder.svg?height=300&width=300"
+                  }
+                  alt={awardee.fullname}
                   layout="fill"
                   objectFit="cover"
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
                 <div className="absolute bottom-4 left-4 text-white">
-                  <h2 className="text-2xl font-bold mb-1">{awardee.name}</h2>
-                  <p className="text-sm">{awardee.position}</p>
+                  <h2 className="text-2xl font-bold mb-1">
+                    {awardee.fullname}
+                  </h2>
+                  <p className="text-sm">{awardee.occupation}</p>
                 </div>
               </div>
               <div className="p-6">
                 <div className="flex items-center mb-2 text-gray-600">
                   <MapPin className="mr-2" size={16} />
-                  <span>{awardee.location}</span>
+                  <span>{awardee.area}</span>
                 </div>
-                <p className="mb-4 text-gray-700">{awardee.achievement}</p>
+                <p className="mb-4 text-gray-700">{awardee.description}</p>
                 <div className="flex items-center justify-between text-sm">
                   <div className="flex items-center text-yellow-600">
                     <Briefcase className="mr-2" size={16} />
-                    <span>Awarded in {awardee.year}</span>
+                    <span>Awarded in {awardee.yearOfAward}</span>
                   </div>
                   <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
-                    {awardee.category}
+                    {awardee.categories}
                   </span>
                 </div>
               </div>

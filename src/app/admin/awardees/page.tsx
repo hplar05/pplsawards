@@ -1,11 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus, Search, Edit, Trash2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import {
   Select,
   SelectContent,
@@ -29,89 +28,86 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-// import { AwardeeForm } from "../components/AwardeeForm";
+import { AwardeeForm, type AwardeeFormData } from "@/components/AwardeeForm";
 
-// Mock data for awardees
-const initialAwardees = [
-  {
-    id: 1,
-    name: "John Doe",
-    category: "Innovation",
-    year: 2023,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 2,
-    name: "Jane Smith",
-    category: "Leadership",
-    year: 2023,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 3,
-    name: "Bob Johnson",
-    category: "Sustainability",
-    year: 2022,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 4,
-    name: "Alice Brown",
-    category: "Community Service",
-    year: 2022,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-  {
-    id: 5,
-    name: "Charlie Davis",
-    category: "Innovation",
-    year: 2021,
-    image: "/placeholder.svg?height=100&width=100",
-  },
-];
-
-type Awardee = {
-  id: number;
-  name: string;
-  category: string;
-  year: number;
-  image: string;
-};
+type Awardee = AwardeeFormData & { id: string };
 
 export default function AwardeesPage() {
-  const [awardees, setAwardees] = useState(initialAwardees);
+  const [awardees, setAwardees] = useState<Awardee[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedYear, setSelectedYear] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("All");
+  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editingAwardee, setEditingAwardee] = useState<Awardee | null>(null);
+
+  useEffect(() => {
+    fetchAwardees();
+  }, []);
+
+  const fetchAwardees = async () => {
+    const response = await fetch("/api/awardees");
+    const data = await response.json();
+    setAwardees(data);
+  };
 
   const filteredAwardees = awardees.filter(
     (awardee) =>
-      awardee.name.toLowerCase().includes(searchTerm.toLowerCase()) &&
-      (selectedYear === "All" || awardee.year.toString() === selectedYear) &&
-      (selectedCategory === "All" || awardee.category === selectedCategory)
+      awardee.fullname.toLowerCase().includes(searchTerm.toLowerCase()) &&
+      (selectedYear === "All" || awardee.yearOfAward === selectedYear) &&
+      (selectedCategory === "All" || awardee.categories === selectedCategory)
   );
 
   const years = [
     "All",
-    ...Array.from(new Set(awardees.map((a) => a.year.toString()))),
+    ...Array.from(new Set(awardees.map((a) => a.yearOfAward))),
   ];
   const categories = [
     "All",
-    ...Array.from(new Set(awardees.map((a) => a.category))),
+    ...Array.from(new Set(awardees.map((a) => a.categories))),
   ];
 
-  const handleAddAwardee = (newAwardee: Omit<Awardee, "id">) => {
-    setAwardees([...awardees, { ...newAwardee, id: awardees.length + 1 }]);
+  const handleAddAwardee = async (newAwardee: AwardeeFormData) => {
+    const response = await fetch("/api/awardees", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(newAwardee),
+    });
+    const data = await response.json();
+    setAwardees([...awardees, data]);
+    setIsAddModalOpen(false);
   };
 
-  const handleEditAwardee = (editedAwardee: Awardee) => {
-    setAwardees(
-      awardees.map((a) => (a.id === editedAwardee.id ? editedAwardee : a))
-    );
+  const handleEditAwardee = async (editedAwardee: Awardee) => {
+    const response = await fetch("/api/awardees", {
+      method: "PUT",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(editedAwardee),
+    });
+    const data = await response.json();
+    setAwardees(awardees.map((a) => (a.id === data.id ? data : a)));
+    setIsEditModalOpen(false);
+    setEditingAwardee(null);
   };
 
-  const handleDeleteAwardee = (id: number) => {
+  const handleDeleteAwardee = async (id: string) => {
+    await fetch("/api/awardees", {
+      method: "DELETE",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ id }),
+    });
     setAwardees(awardees.filter((a) => a.id !== id));
+  };
+
+  const handleOpenEditModal = (awardee: Awardee) => {
+    setEditingAwardee(awardee);
+    setIsEditModalOpen(true);
   };
 
   return (
@@ -153,7 +149,9 @@ export default function AwardeesPage() {
                   Latest Year
                 </p>
                 <p className="text-3xl font-bold text-blue-600">
-                  {Math.max(...awardees.map((a) => a.year))}
+                  {Math.max(
+                    ...awardees.map((a) => Number.parseInt(a.yearOfAward))
+                  )}
                 </p>
               </div>
             </div>
@@ -193,15 +191,18 @@ export default function AwardeesPage() {
               <SelectContent>
                 {categories.map((category) => (
                   <SelectItem key={category} value={category}>
-                    {category}
+                    {category.replace("_", " ")}
                   </SelectItem>
                 ))}
               </SelectContent>
             </Select>
           </div>
-          <Dialog>
+          <Dialog open={isAddModalOpen} onOpenChange={setIsAddModalOpen}>
             <DialogTrigger asChild>
-              <Button className="bg-yellow-500 hover:bg-yellow-600 text-white">
+              <Button
+                className="bg-yellow-500 hover:bg-yellow-600 text-white"
+                onClick={() => setIsAddModalOpen(true)}
+              >
                 <Plus className="mr-2 h-4 w-4" /> Add New Awardee
               </Button>
             </DialogTrigger>
@@ -209,7 +210,10 @@ export default function AwardeesPage() {
               <DialogHeader>
                 <DialogTitle>Add New Awardee</DialogTitle>
               </DialogHeader>
-              {/* <AwardeeForm onSubmit={handleAddAwardee} /> */}
+              <AwardeeForm
+                onSubmit={handleAddAwardee}
+                onClose={() => setIsAddModalOpen(false)}
+              />
             </DialogContent>
           </Dialog>
         </div>
@@ -220,6 +224,8 @@ export default function AwardeesPage() {
               <TableHeader>
                 <TableRow>
                   <TableHead>Name</TableHead>
+                  <TableHead>Occupation</TableHead>
+                  <TableHead>Area</TableHead>
                   <TableHead>Category</TableHead>
                   <TableHead>Year</TableHead>
                   <TableHead className="text-right">Actions</TableHead>
@@ -236,17 +242,27 @@ export default function AwardeesPage() {
                       transition={{ duration: 0.3 }}
                     >
                       <TableCell className="font-medium">
-                        {awardee.name}
+                        {awardee.fullname}
                       </TableCell>
-                      <TableCell>{awardee.category}</TableCell>
-                      <TableCell>{awardee.year}</TableCell>
+                      <TableCell>{awardee.occupation}</TableCell>
+                      <TableCell>{awardee.area}</TableCell>
+                      <TableCell>
+                        {awardee.categories.replace("_", " ")}
+                      </TableCell>
+                      <TableCell>{awardee.yearOfAward}</TableCell>
                       <TableCell className="text-right">
-                        <Dialog>
+                        <Dialog
+                          open={
+                            isEditModalOpen && editingAwardee?.id === awardee.id
+                          }
+                          onOpenChange={setIsEditModalOpen}
+                        >
                           <DialogTrigger asChild>
                             <Button
                               variant="outline"
                               size="sm"
                               className="mr-2"
+                              onClick={() => handleOpenEditModal(awardee)}
                             >
                               <Edit className="mr-2 h-4 w-4" /> Edit
                             </Button>
@@ -255,10 +271,18 @@ export default function AwardeesPage() {
                             <DialogHeader>
                               <DialogTitle>Edit Awardee</DialogTitle>
                             </DialogHeader>
-                            {/* <AwardeeForm
-                              awardee={awardee}
-                              onSubmit={handleEditAwardee}
-                            /> */}
+                            {editingAwardee && (
+                              <AwardeeForm
+                                initialData={editingAwardee}
+                                onSubmit={(data) =>
+                                  handleEditAwardee({
+                                    ...data,
+                                    id: editingAwardee.id,
+                                  })
+                                }
+                                onClose={() => setIsEditModalOpen(false)}
+                              />
+                            )}
                           </DialogContent>
                         </Dialog>
                         <Button
