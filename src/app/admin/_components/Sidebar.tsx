@@ -16,7 +16,7 @@ import { LogoutButton } from "./LogoutButton";
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
   { icon: Users, label: "Awardees", href: "/admin/awardees" },
-  { icon: Award, label: "Categories", href: "/admin/categories" },
+  { icon: Award, label: "Partners", href: "/admin/partners" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
