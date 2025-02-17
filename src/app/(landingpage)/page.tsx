@@ -47,46 +47,73 @@ export default function Home() {
   return (
     <div className="flex flex-col min-h-screen">
       <main className="flex-1">
-        <motion.section
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.5 }}
-          className="w-full py-12 md:py-24 lg:py-32 xl:py-48 bg-gradient-to-r from-yellow-50 via-yellow-100 to-yellow-50 flex items-center justify-center"
-        >
-          <div className="container px-4 md:px-6">
-            <div className="flex flex-col items-center space-y-4 text-center">
-              <div className="space-y-2">
-                <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl/none">
-                  Recognizing Excellence in Every Field
-                </h1>
-                <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl">
-                  Celebrate achievements, inspire greatness, and honor the best
-                  in the industry with our prestigious awards.
-                </p>
-              </div>
-              <div className="w-full max-w-sm">
+        <section className="relative bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 py-20 md:py-32">
+          <div className="container mx-auto px-4 md:px-6">
+            <div className="flex flex-col items-center text-center">
+              <motion.h1
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5 }}
+                className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
+              >
+                Celebrating Excellence in Every Field
+              </motion.h1>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.2 }}
+                className="text-xl text-gray-800 mb-8 max-w-2xl"
+              >
+                Join us in honoring outstanding achievements and inspiring
+                greatness across industries.
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.4 }}
+                className="mb-8 bg-white rounded-lg shadow-md z-10"
+              >
                 <Countdown />
-              </div>
-              <p className="text-sm text-gray-500">
-                Time left until March 15, 2025
-              </p>
-              <div className="space-x-4">
+              </motion.div>
+              <motion.p
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.5 }}
+                className="text-sm text-gray-800 mb-4 z-10"
+              >
+                Time left until the next award ceremony
+              </motion.p>
+              <motion.div
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: 0.6 }}
+                className="flex space-x-4 z-10 mt-3"
+              >
                 <Link
-                  href="#contact"
-                  className="inline-flex h-9 items-center justify-center rounded-md bg-yellow-500 px-4 py-2 text-sm font-medium text-gray-900 shadow transition-colors hover:bg-yellow-400 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950"
+                  href="/contact"
+                  className="bg-gray-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-600 transition duration-300"
                 >
                   Get Started
                 </Link>
                 <Link
-                  href="#awards"
-                  className="inline-flex h-9 items-center justify-center rounded-md border border-gray-200 bg-white px-4 py-2 text-sm font-medium shadow-sm transition-colors hover:bg-gray-100 hover:text-gray-900 focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-gray-950"
+                  href="/criteria"
+                  className="bg-yellow-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-400 transition duration-300"
                 >
                   Learn More
                 </Link>
-              </div>
+              </motion.div>
             </div>
           </div>
-        </motion.section>
+          <div className="absolute bottom-0 left-0 right-0 z-0">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+              <path
+                fill="#ffffff"
+                fillOpacity="1"
+                d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
+              ></path>
+            </svg>
+          </div>
+        </section>
 
         <motion.section
           initial={{ opacity: 0 }}

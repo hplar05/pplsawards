@@ -4,7 +4,15 @@ import { useState, useEffect } from "react";
 import { motion } from "framer-motion";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Users, Trophy, Calendar, Plus, FileText, Mail } from "lucide-react";
+import {
+  Users,
+  Trophy,
+  Calendar,
+  Plus,
+  FileText,
+  Mail,
+  Handshake,
+} from "lucide-react";
 import Link from "next/link";
 
 type DashboardData = {
@@ -28,7 +36,7 @@ export default function AdminDashboard() {
   useEffect(() => {
     const fetchDashboardData = async () => {
       try {
-        const response = await fetch("/api/admin/dashboard");
+        const response = await fetch("/api/dashboard");
         if (!response.ok) {
           throw new Error("Failed to fetch dashboard data");
         }
@@ -70,17 +78,17 @@ export default function AdminDashboard() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 p-8">
-      <motion.div
-        initial={{ opacity: 0, y: 20 }}
-        animate={{ opacity: 1, y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="max-w-7xl mx-auto"
-      >
-        <h1 className="text-3xl font-bold text-gray-900 mb-8">
-          Admin Dashboard
-        </h1>
+    <div className="min-h-screen bg-gray-100">
+      <header className="text-black py-12">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold flex items-center">
+            {/* <Handshake className="mr-4 max-md:hidden" size={40} /> */}
+            Dashboard
+          </h1>
+        </div>
+      </header>
 
+      <main className="container mx-auto px-4 py-12">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
           <Card className="bg-gradient-to-br from-blue-500 to-blue-600 text-white">
             <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
@@ -141,32 +149,18 @@ export default function AdminDashboard() {
             </CardHeader>
             <CardContent className="space-y-4">
               <Button
-                className="w-full bg-blue-500 hover:bg-blue-600 text-white"
+                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white "
                 onClick={() => handleQuickAction("Add Awardee")}
                 disabled={isLoading}
               >
                 <Plus className="mr-2 h-4 w-4" /> Add New Awardee
               </Button>
               <Button
-                className="w-full bg-green-500 hover:bg-green-600 text-white"
-                onClick={() => handleQuickAction("Schedule Ceremony")}
+                className="w-full bg-yellow-700 hover:bg-yellow-800 text-white "
+                onClick={() => handleQuickAction("Add Awardee")}
                 disabled={isLoading}
               >
-                <Calendar className="mr-2 h-4 w-4" /> Schedule Ceremony
-              </Button>
-              <Button
-                className="w-full bg-purple-500 hover:bg-purple-600 text-white"
-                onClick={() => handleQuickAction("Generate Report")}
-                disabled={isLoading}
-              >
-                <FileText className="mr-2 h-4 w-4" /> Generate Report
-              </Button>
-              <Button
-                className="w-full bg-yellow-500 hover:bg-yellow-600 text-white"
-                onClick={() => handleQuickAction("Send Newsletter")}
-                disabled={isLoading}
-              >
-                <Mail className="mr-2 h-4 w-4" /> Send Newsletter
+                <Plus className="mr-2 h-4 w-4" /> Add New Partners
               </Button>
             </CardContent>
           </Card>
@@ -180,7 +174,7 @@ export default function AdminDashboard() {
             View All Awardees
           </Link>
         </div>
-      </motion.div>
+      </main>
     </div>
   );
 }

@@ -66,7 +66,7 @@ export function Countdown() {
   });
 
   return (
-    <div className="flex justify-center items-center space-x-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg">
+    <div className="flex justify-center items-center space-x-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg ">
       {timerComponents.filter(Boolean).length ? (
         timerComponents
       ) : (

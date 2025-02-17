@@ -16,7 +16,7 @@ import {
 } from "@/components/ui/select";
 import { UploadButton } from "@uploadthing/react";
 import type { OurFileRouter } from "@/app/api/uploadthing/core";
-import Image from "next/image";
+// import Image from "next/image";
 
 type AwardeeFormProps = {
   onSubmit: (data: AwardeeFormData) => void;
@@ -121,7 +121,7 @@ export function AwardeeForm({
           }}
         />
         {formData.images && (
-          <Image
+          <img
             src={formData.images || "/placeholder.svg"}
             alt="Uploaded"
             className="mt-2 w-32 h-32 object-cover"

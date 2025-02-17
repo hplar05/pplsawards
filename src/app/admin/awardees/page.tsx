@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Plus, Search, Edit, Trash2 } from "lucide-react";
+import { Plus, Search, Edit, Trash2, Handshake } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import {
@@ -111,17 +111,17 @@ export default function AwardeesPage() {
   };
 
   return (
-    <motion.div
-      initial={{ opacity: 0 }}
-      animate={{ opacity: 1 }}
-      transition={{ duration: 0.5 }}
-      className="p-8 bg-gray-50 min-h-screen"
-    >
-      <div className="max-w-7xl mx-auto">
-        <h1 className="text-3xl font-bold mb-8 text-gray-800">
-          Manage Awardees
-        </h1>
+    <div className="min-h-screen bg-gray-100">
+      <header className="text-black py-12">
+        <div className="container mx-auto px-4">
+          <h1 className="text-4xl font-bold flex items-center">
+            {/* <Handshake className="mr-4 max-md:hidden" size={40} /> */}
+            Manage Awardees
+          </h1>
+        </div>
+      </header>
 
+      <main className="container mx-auto px-4 py-12">
         <Card className="mb-8">
           <CardHeader>
             <CardTitle>Awardee Statistics</CardTitle>
@@ -300,7 +300,7 @@ export default function AwardeesPage() {
             </Table>
           </CardContent>
         </Card>
-      </div>
-    </motion.div>
+      </main>
+    </div>
   );
 }

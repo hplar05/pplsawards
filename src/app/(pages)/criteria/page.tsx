@@ -3,7 +3,7 @@ import { Award, CheckCircle } from "lucide-react";
 export default function Criteria() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-yellow-600 text-white py-12">
+      <header className="bg-yellow-500 text-white py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold flex items-center">
             <Award className="mr-4 max-md:hidden" size={40} />
