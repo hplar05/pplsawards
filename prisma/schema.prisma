@@ -55,9 +55,14 @@ model OurPartners {
   logoImg String?
 }
 
+// ... (other models)
+
 model VideoPresentation {
-  id        String  @id @default(cuid())
+  id        String   @id @default(cuid())
   videoLink String?
+  title     String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 model WhatOurClient {
