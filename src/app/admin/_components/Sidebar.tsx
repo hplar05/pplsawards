@@ -10,6 +10,7 @@ import {
   Settings,
   ChevronRight,
   TimerIcon,
+  VideoIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { LogoutButton } from "./LogoutButton";
@@ -19,6 +20,11 @@ const sidebarItems = [
   { icon: Users, label: "Awardees", href: "/admin/awardees" },
   { icon: TimerIcon, label: "Countdown", href: "/admin/countdown" },
   { icon: Award, label: "Partners", href: "/admin/partners" },
+  {
+    icon: VideoIcon,
+    label: "Video-Presentation",
+    href: "/admin/video-presentation",
+  },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
