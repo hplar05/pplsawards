@@ -9,6 +9,7 @@ import {
   Award,
   Settings,
   ChevronRight,
+  TimerIcon,
 } from "lucide-react";
 import { motion } from "framer-motion";
 import { LogoutButton } from "./LogoutButton";
@@ -16,13 +17,14 @@ import { LogoutButton } from "./LogoutButton";
 const sidebarItems = [
   { icon: LayoutDashboard, label: "Dashboard", href: "/admin/dashboard" },
   { icon: Users, label: "Awardees", href: "/admin/awardees" },
+  { icon: TimerIcon, label: "Countdown", href: "/admin/countdown" },
   { icon: Award, label: "Partners", href: "/admin/partners" },
   { icon: Settings, label: "Settings", href: "/admin/settings" },
 ];
 
 export function Sidebar() {
   const pathname = usePathname();
-  const [isCollapsed, setIsCollapsed] = useState(true);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   return (
     <motion.div

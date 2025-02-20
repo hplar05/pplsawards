@@ -43,8 +43,11 @@ enum Cateregories {
 }
 
 model Countdown {
-  id    String @id @default(cuid())
-  timer String
+  id          String   @id @default(cuid())
+  targetDate  DateTime
+  description String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 }
 
 model OurPartners {

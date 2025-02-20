@@ -9,49 +9,66 @@ interface TimeLeft {
   seconds: number;
 }
 
+interface CountdownData {
+  targetDate: string;
+  description: string | null;
+}
+
 export function Countdown() {
-  const targetDate = new Date("2025-03-15T00:00:00").getTime();
-
-  // State for time left
   const [timeLeft, setTimeLeft] = useState<Partial<TimeLeft>>({});
-
-  // State to check if component is mounted
+  const [countdownData, setCountdownData] = useState<CountdownData | null>(
+    null
+  );
   const [isMounted, setIsMounted] = useState(false);
 
-  function calculateTimeLeft(): Partial<TimeLeft> {
-    const difference = targetDate - new Date().getTime();
-    let timeLeft: Partial<TimeLeft> = {};
+  useEffect(() => {
+    const fetchCountdownData = async () => {
+      try {
+        const response = await fetch("/api/countdown");
+        const data = await response.json();
+        setCountdownData(data);
+      } catch (error) {
+        console.error("Failed to fetch countdown data:", error);
+      }
+    };
 
-    if (difference > 0) {
-      timeLeft = {
-        days: Math.floor(difference / (1000 * 60 * 60 * 24)),
-        hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
-        minutes: Math.floor((difference / 1000 / 60) % 60),
-        seconds: Math.floor((difference / 1000) % 60),
-      };
-    }
-
-    return timeLeft;
-  }
+    fetchCountdownData();
+    setIsMounted(true);
+  }, []);
 
   useEffect(() => {
-    // Mark the component as mounted
-    setIsMounted(true);
+    if (!countdownData) return;
+
+    const calculateTimeLeft = () => {
+      const difference =
+        new Date(countdownData.targetDate).getTime() - new Date().getTime();
+      let timeLeft: Partial<TimeLeft> = {};
+
+      if (difference > 0) {
+        timeLeft = {
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        };
+      }
+
+      return timeLeft;
+    };
 
     const timer = setInterval(() => {
       setTimeLeft(calculateTimeLeft());
     }, 1000);
 
     return () => clearInterval(timer);
-  }, []);
+  }, [countdownData]);
 
-  if (!isMounted) {
-    // Prevent rendering on the server
+  if (!isMounted || !countdownData) {
     return null;
   }
 
   const timerComponents = Object.keys(timeLeft).map((interval) => {
-    const value = timeLeft[interval as keyof TimeLeft]; // Type-safe access
+    const value = timeLeft[interval as keyof TimeLeft];
 
     if (!value && value !== 0) {
       return null;
@@ -66,12 +83,17 @@ export function Countdown() {
   });
 
   return (
-    <div className="flex justify-center items-center space-x-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg ">
-      {timerComponents.filter(Boolean).length ? (
-        timerComponents
-      ) : (
-        <span>Time&apos;s up!</span>
+    <div className="flex flex-col items-center justify-center space-y-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg">
+      {countdownData.description && (
+        <h2 className="text-2xl font-bold">{countdownData.description}</h2>
       )}
+      <div className="flex justify-center items-center space-x-4">
+        {timerComponents.filter(Boolean).length ? (
+          timerComponents
+        ) : (
+          <span>Times up!</span>
+        )}
+      </div>
     </div>
   );
 }
