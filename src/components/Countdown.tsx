@@ -91,7 +91,7 @@ export function Countdown() {
         {timerComponents.filter(Boolean).length ? (
           timerComponents
         ) : (
-          <span>Times up!</span>
+          <span></span>
         )}
       </div>
     </div>

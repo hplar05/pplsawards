@@ -1,14 +1,25 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Award, Search, Briefcase, MapPin, ChevronDown } from "lucide-react";
+import { Award, Search, Briefcase, MapPin, X } from "lucide-react";
 import Image from "next/image";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
+  DialogClose,
 } from "@/components/ui/dialog";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import { motion, AnimatePresence } from "framer-motion";
 
 type Awardee = {
   id: string;
@@ -34,12 +45,22 @@ function AwardeeModal({
 
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[600px] bg-white rounded-lg overflow-hidden">
         <DialogHeader>
-          <DialogTitle>{awardee.fullname}</DialogTitle>
+          <DialogTitle className="text-2xl font-bold text-yellow-600">
+            {awardee.fullname}
+          </DialogTitle>
+          <DialogClose asChild>
+            <Button
+              variant="ghost"
+              className="absolute right-4 top-4 rounded-full p-2"
+            >
+              <X className="h-4 w-4" />
+            </Button>
+          </DialogClose>
         </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="relative h-64 w-full">
+        <div className="grid gap-6 py-4">
+          <div className="relative h-80 w-full">
             <Image
               src={awardee.images || "/placeholder.svg?height=300&width=300"}
               alt={awardee.fullname}
@@ -48,25 +69,27 @@ function AwardeeModal({
               className="rounded-lg"
             />
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <span className="font-bold">Occupation:</span>
-            <span className="col-span-3">{awardee.occupation}</span>
+          <div className="grid grid-cols-2 gap-4">
+            <div className="space-y-2">
+              <p className="font-semibold text-gray-600">Occupation</p>
+              <p>{awardee.occupation}</p>
+            </div>
+            <div className="space-y-2">
+              <p className="font-semibold text-gray-600">Area</p>
+              <p>{awardee.area}</p>
+            </div>
+            <div className="space-y-2">
+              <p className="font-semibold text-gray-600">Year of Award</p>
+              <p>{awardee.yearOfAward}</p>
+            </div>
+            <div className="space-y-2">
+              <p className="font-semibold text-gray-600">Category</p>
+              <p>{awardee.categories}</p>
+            </div>
           </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <span className="font-bold">Area:</span>
-            <span className="col-span-3">{awardee.area}</span>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <span className="font-bold">Year:</span>
-            <span className="col-span-3">{awardee.yearOfAward}</span>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <span className="font-bold">Category:</span>
-            <span className="col-span-3">{awardee.categories}</span>
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <span className="font-bold">Description:</span>
-            <span className="col-span-3">{awardee.description}</span>
+          <div className="space-y-2">
+            <p className="font-semibold text-gray-600">Description</p>
+            <p className="text-gray-700">{awardee.description}</p>
           </div>
         </div>
       </DialogContent>
@@ -129,7 +152,7 @@ export default function AwardeesPage() {
   if (isLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        Loading...
+        <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-yellow-500"></div>
       </div>
     );
   }
@@ -143,112 +166,118 @@ export default function AwardeesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-100">
-      <header className="bg-yellow-500 text-white py-12">
+    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100">
+      <header className="bg-yellow-500 text-white py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold flex items-center">
-            <Award className="mr-4 max-md:hidden" size={40} />
+          <h1 className="text-5xl font-bold flex items-center justify-center">
+            <Award className="mr-4" size={48} />
             Awardees Hall of Fame
           </h1>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-12">
-        <div className="mb-12 bg-white rounded-lg shadow-md p-6">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+        <div className="mb-12 bg-white rounded-lg shadow-lg p-8">
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             <div className="relative">
-              <input
+              <Input
                 type="text"
                 placeholder="Search awardees..."
-                className="w-full p-3 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full pl-10"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
               />
               <Search
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
+                className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400"
                 size={20}
               />
             </div>
-            <div className="relative">
-              <select
-                className="w-full p-3 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 appearance-none"
-                value={selectedYear}
-                onChange={(e) => setSelectedYear(e.target.value)}
-              >
+            <Select value={selectedYear} onValueChange={setSelectedYear}>
+              <SelectTrigger>
+                <SelectValue placeholder="Select Year" />
+              </SelectTrigger>
+              <SelectContent>
                 {years.map((year) => (
-                  <option key={year} value={year}>
+                  <SelectItem key={year} value={year}>
                     {year === "All" ? "All Years" : year}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-            </div>
-            <div className="relative">
-              <select
-                className="w-full p-3 pr-10 rounded-lg border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-500 appearance-none"
-                value={selectedCategory}
-                onChange={(e) => setSelectedCategory(e.target.value)}
-              >
+              </SelectContent>
+            </Select>
+            <Select
+              value={selectedCategory}
+              onValueChange={setSelectedCategory}
+            >
+              <SelectTrigger>
+                <SelectValue placeholder="Select Category" />
+              </SelectTrigger>
+              <SelectContent>
                 {categories.map((category) => (
-                  <option key={category} value={category}>
+                  <SelectItem key={category} value={category}>
                     {category === "All" ? "All Categories" : category}
-                  </option>
+                  </SelectItem>
                 ))}
-              </select>
-              <ChevronDown
-                className="absolute right-3 top-1/2 transform -translate-y-1/2 text-gray-400"
-                size={20}
-              />
-            </div>
+              </SelectContent>
+            </Select>
           </div>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {filteredAwardees.map((awardee) => (
-            <div
-              key={awardee.id}
-              className="bg-white rounded-lg shadow-md overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-lg cursor-pointer"
-              onClick={() => handleAwardeeClick(awardee)}
-            >
-              <div className="relative h-64">
-                <Image
-                  src={
-                    awardee.images || "/placeholder.svg?height=300&width=300"
-                  }
-                  alt={awardee.fullname}
-                  layout="fill"
-                  objectFit="cover"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
-                <div className="absolute bottom-4 left-4 text-white">
-                  <h2 className="text-2xl font-bold mb-1">
-                    {awardee.fullname}
-                  </h2>
-                  <p className="text-sm">{awardee.occupation}</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <div className="flex items-center mb-2 text-gray-600">
-                  <MapPin className="mr-2" size={16} />
-                  <span>{awardee.area}</span>
-                </div>
-                <p className="mb-4 text-gray-700">{awardee.description}</p>
-                <div className="flex items-center justify-between text-sm">
-                  <div className="flex items-center text-yellow-600">
-                    <Briefcase className="mr-2" size={16} />
-                    <span>Awarded in {awardee.yearOfAward}</span>
+        <AnimatePresence>
+          <motion.div
+            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
+            {filteredAwardees.map((awardee) => (
+              <motion.div
+                key={awardee.id}
+                className="bg-white rounded-lg shadow-lg overflow-hidden transform transition duration-300 hover:scale-105 hover:shadow-xl cursor-pointer"
+                onClick={() => handleAwardeeClick(awardee)}
+                whileHover={{ y: -5 }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: 20 }}
+              >
+                <div className="relative h-64">
+                  <Image
+                    src={
+                      awardee.images || "/placeholder.svg?height=300&width=300"
+                    }
+                    alt={awardee.fullname}
+                    layout="fill"
+                    objectFit="cover"
+                  />
+                  <div className="absolute inset-0 bg-gradient-to-t from-black to-transparent"></div>
+                  <div className="absolute bottom-4 left-4 text-white">
+                    <h2 className="text-2xl font-bold mb-1">
+                      {awardee.fullname}
+                    </h2>
+                    <p className="text-sm">{awardee.occupation}</p>
                   </div>
-                  <span className="bg-yellow-100 text-yellow-800 px-2 py-1 rounded-full">
-                    {awardee.categories}
-                  </span>
                 </div>
-              </div>
-            </div>
-          ))}
-        </div>
+                <div className="p-6">
+                  <div className="flex items-center mb-2 text-gray-600">
+                    <MapPin className="mr-2" size={16} />
+                    <span>{awardee.area}</span>
+                  </div>
+                  <p className="mb-4 text-gray-700 line-clamp-3">
+                    {awardee.description}
+                  </p>
+                  <div className="flex items-center justify-between text-sm">
+                    <div className="flex items-center text-yellow-600">
+                      <Briefcase className="mr-2" size={16} />
+                      <span>Awarded in {awardee.yearOfAward}</span>
+                    </div>
+                    <span className="bg-yellow-100 text-yellow-800 px-3 py-1 rounded-full">
+                      {awardee.categories}
+                    </span>
+                  </div>
+                </div>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
       </main>
 
       <AwardeeModal
