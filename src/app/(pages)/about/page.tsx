@@ -4,10 +4,10 @@ import Link from "next/link";
 export default function AboutUs() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-yellow-500 text-white py-12">
+      <header className="bg-yellow-500 text-white py-16">
         <div className="container mx-auto px-4">
-          <h1 className="text-4xl font-bold flex items-center">
-            <Award className="mr-4 max-md:hidden" size={40} />
+          <h1 className="text-5xl font-bold flex items-center justify-center">
+            <Award className="mr-4 max-md:hidden" size={48} />
             About Philippine Public Service Leadership Awards
           </h1>
         </div>

@@ -20,6 +20,7 @@ export function Countdown() {
     null
   );
   const [isMounted, setIsMounted] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchCountdownData = async () => {
@@ -29,6 +30,8 @@ export function Countdown() {
         setCountdownData(data);
       } catch (error) {
         console.error("Failed to fetch countdown data:", error);
+      } finally {
+        setIsLoading(false);
       }
     };
 
@@ -82,6 +85,14 @@ export function Countdown() {
     );
   });
 
+  // if (isLoading) {
+  //   return (
+  //     <div className="min-h-screen flex items-center justify-center">
+  //       <div className="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-yellow-500"></div>
+  //     </div>
+  //   );
+  // }
+
   return (
     <div className="flex flex-col items-center justify-center space-y-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg">
       {countdownData.description && (
@@ -91,7 +102,7 @@ export function Countdown() {
         {timerComponents.filter(Boolean).length ? (
           timerComponents
         ) : (
-          <span></span>
+          <div className="animate-spin rounded-full h-10 w-10 border-t-2 border-b-2 border-yellow-500"></div>
         )}
       </div>
     </div>

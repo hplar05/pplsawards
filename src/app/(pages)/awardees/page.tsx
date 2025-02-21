@@ -166,11 +166,11 @@ export default function AwardeesPage() {
   }
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-yellow-50 to-yellow-100">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       <header className="bg-yellow-500 text-white py-16">
         <div className="container mx-auto px-4">
           <h1 className="text-5xl font-bold flex items-center justify-center">
-            <Award className="mr-4" size={48} />
+            <Award className="mr-4 max-md:hidden" size={48} />
             Awardees Hall of Fame
           </h1>
         </div>

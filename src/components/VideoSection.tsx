@@ -35,9 +35,7 @@ export function VideoSection() {
 
   return (
     <div className="w-full max-w-4xl mx-auto">
-      <h2 className="text-2xl font-bold mb-4">
-        {presentation.title || "Video Presentation"}
-      </h2>
+      <h2 className="text-2xl font-bold mb-4">{presentation.title || null}</h2>
       <div className="aspect-video">
         <iframe
           width="100%"

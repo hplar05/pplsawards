@@ -6,24 +6,34 @@ import { ChevronDown } from "lucide-react";
 
 const faqs = [
   {
-    question: "What types of awards does AwardCo offer?",
+    question: "How we were chosen?",
     answer:
-      "AwardCo offers a wide range of awards including Innovation Awards, Leadership Excellence Awards, Sustainability Champion Awards, and custom awards tailored to your organization's specific needs and values.",
+      "Actually, we are just the organizer of the said event. They have separate team who does the survey and validation of the nomination form nationwide. What we receive from them is the complete list of awardees. We are just liable in sending out the letter and making follow ups with them. What I could offer you is the criteria and company profile since the result is very discreet in protection to other competitors to avoid bias",
   },
   {
-    question: "How does the nomination process work?",
+    question: "Why is there a fee?",
     answer:
-      "The nomination process typically involves submitting a detailed application form highlighting the nominee's achievements. Our team will guide you through each step, from setting criteria to collecting and reviewing nominations.",
+      "Because we are a non-profit organization considering our event will be at the country’s biggest hotel and casino to date. Also we are working hand in hand together with the chosen beneficiary. But in return to your Business/Company you will be receiving a marketing mileage from our end.",
   },
   {
-    question: "Can AwardCo help with the award ceremony planning?",
+    question: "Who's your Chairman?",
     answer:
-      "We offer comprehensive event planning services, handling everything from venue selection and decor to catering and entertainment, ensuring a memorable and impactful award ceremony.",
+      "Dr. Richard Carl Fauci is our Chairman He will be attending too on the day of the event.",
   },
   {
-    question: "How are the winners selected?",
+    question: "Are you legit?",
     answer:
-      "Winners are selected through a rigorous judging process. We assemble a panel of industry experts who evaluate each nomination based on predetermined criteria. The process is designed to be fair, transparent, and impartial.",
+      "Of course, We can send you our Business Permit for your reference thru our email address ppslawards@gmail.com or go to Contact Us. Also you can call the venue to confirm our booking on the said day or you can visit us here at the office for further info.",
+  },
+  {
+    question: "Do you accept Exdeals?",
+    answer:
+      "Yes, but only in 50:50 ratio we are not allowed to accept 100% exdeal proposal.",
+  },
+  {
+    question: "Is the event going on?",
+    answer:
+      "Yes, because we are not allowed to move the event in protection to our provincial awardees. Since they will have to book pa their tickets and Hotel you can call the venue for confirming the day.",
   },
 ];
 
