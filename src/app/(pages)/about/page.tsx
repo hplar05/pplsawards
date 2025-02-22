@@ -1,6 +1,6 @@
 import Image from "next/image";
 
-const solutions = [
+const abouts = [
   {
     title: "Our Mission",
     description:
@@ -21,7 +21,7 @@ const solutions = [
   },
 ];
 
-export default function Solutions() {
+export default function About() {
   return (
     <section id="solutions" className="py-20 bg-white">
       <div className="container mx-auto px-4">
@@ -42,7 +42,7 @@ export default function Solutions() {
           </p>
         </div>
         <div className="space-y-16">
-          {solutions.map((solution, index) => (
+          {abouts.map((about, index) => (
             <div
               key={index}
               className={`flex flex-col ${
@@ -51,14 +51,14 @@ export default function Solutions() {
             >
               <div className="md:w-1/2">
                 <h3 className="text-2xl font-bold text-primary mb-4 flex items-center">
-                  {solution.title}
+                  {about.title}
                 </h3>
-                <p className="text-gray-600">{solution.description}</p>
+                <p className="text-gray-600">{about.description}</p>
               </div>
               <div className="md:w-1/2">
                 <Image
-                  src={solution.image || "/placeholder.svg"}
-                  alt={solution.title}
+                  src={about.image || "/placeholder.svg"}
+                  alt={about.title}
                   width={600}
                   height={400}
                   className="rounded-lg shadow-lg"
