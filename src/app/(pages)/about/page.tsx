@@ -23,51 +23,53 @@ const abouts = [
 
 export default function About() {
   return (
-    <section id="solutions" className="py-20 bg-white">
-      <div className="container mx-auto px-4">
-        <div className="max-w-xl mx-auto text-center mb-16">
-          {/* <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+    <div className="min-h-screen bg-gray-50">
+      <main className="container mx-auto px-4 py-12">
+        <div className="container mx-auto px-4">
+          <div className="max-w-xl mx-auto text-center mb-16">
+            {/* <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
                   About PPSLAWARDS
                 </h2> */}
-          <span className="text-yellow-600 font-medium tracking-wider">
-            ABOUT
-          </span>
-          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-6">
-            Philippine Public Service Leadership Awards
-          </h2>
-          <p className="text-gray-600 leading-relaxed">
-            Honor individuals who make outstanding contributions and who’s
-            accomplished are models of exemplary public service for those
-            dedicated to the public good-now and in the future.
-          </p>
-        </div>
-        <div className="space-y-16">
-          {abouts.map((about, index) => (
-            <div
-              key={index}
-              className={`flex flex-col ${
-                index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
-              } items-center gap-8`}
-            >
-              <div className="md:w-1/2">
-                <h3 className="text-2xl font-bold text-primary mb-4 flex items-center">
-                  {about.title}
-                </h3>
-                <p className="text-gray-600">{about.description}</p>
+            <span className="text-yellow-600 font-medium tracking-wider">
+              ABOUT
+            </span>
+            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-6">
+              Philippine Public Service Leadership Awards
+            </h2>
+            <p className="text-gray-600 leading-relaxed">
+              Honor individuals who make outstanding contributions and who’s
+              accomplished are models of exemplary public service for those
+              dedicated to the public good-now and in the future.
+            </p>
+          </div>
+          <div className="space-y-16">
+            {abouts.map((about, index) => (
+              <div
+                key={index}
+                className={`flex flex-col ${
+                  index % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
+                } items-center gap-8`}
+              >
+                <div className="md:w-1/2">
+                  <h3 className="text-2xl font-bold text-primary mb-4 flex items-center">
+                    {about.title}
+                  </h3>
+                  <p className="text-gray-600">{about.description}</p>
+                </div>
+                <div className="md:w-1/2">
+                  <Image
+                    src={about.image || "/placeholder.svg"}
+                    alt={about.title}
+                    width={600}
+                    height={400}
+                    className="rounded-lg shadow-lg"
+                  />
+                </div>
               </div>
-              <div className="md:w-1/2">
-                <Image
-                  src={about.image || "/placeholder.svg"}
-                  alt={about.title}
-                  width={600}
-                  height={400}
-                  className="rounded-lg shadow-lg"
-                />
-              </div>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </main>
+    </div>
   );
 }

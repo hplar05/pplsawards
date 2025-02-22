@@ -3,16 +3,22 @@ import { Award, CheckCircle } from "lucide-react";
 export default function Criteria() {
   return (
     <div className="min-h-screen bg-gray-50">
-      <header className="bg-yellow-500 text-white py-16">
-        <div className="container mx-auto px-4">
-          <h1 className="text-5xl font-bold flex items-center justify-center">
-            <Award className="mr-4 max-md:hidden" size={48} />
-            Criteria of Philippine Public Service Leadership Awards
-          </h1>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-12">
+        <div className="max-w-xl mx-auto text-center mb-16">
+          {/* <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl text-center mb-8">
+                  About PPSLAWARDS
+                </h2> */}
+          <span className="text-yellow-600 font-medium tracking-wider">
+            CRITERIA
+          </span>
+          <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mt-4 mb-6">
+            Philippine Public Service Leadership Awards
+          </h2>
+          <p className="text-gray-600 leading-relaxed">
+            Six criteria determine eligibility for the Philippine Public Service
+            Leadership Awards, recognizing exemplars of public service.
+          </p>
+        </div>
         <section className="mb-12" id="criteria">
           <h2 className="text-2xl font-semibold mb-4">Eligibility Criteria</h2>
           <p className="mb-4">
@@ -56,9 +62,9 @@ export default function Criteria() {
                   "The nominee should demonstrate strong leadership qualities, inspiring and motivating others to achieve shared goals. A commitment to developing future leaders and fostering a positive work environment is essential.",
               },
             ].map((criterion, index) => (
-              <div key={index} className="bg-white p-6 rounded-lg shadow-md">
+              <div key={index} className=" p-6 ">
                 <h3 className="text-xl font-semibold mb-2 flex items-center">
-                  <CheckCircle className="mr-2 text-green-500" size={20} />
+                  <CheckCircle className="mr-2 text-yellow-500" size={20} />
                   {criterion.title}
                 </h3>
                 <p>{criterion.description}</p>
