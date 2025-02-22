@@ -494,7 +494,7 @@ export default function Home() {
                 <div className="relative aspect-[4/3] rounded-2xl overflow-hidden shadow-lg">
                   <Image
                     src="/testimonial-image.jpg"
-                    alt="Fermyを飲む女性"
+                    alt="VOICE"
                     fill
                     className="object-cover"
                   />
@@ -509,13 +509,13 @@ export default function Home() {
                     ))}
                   </div> */}
                   <blockquote className="text-xl text-gray-900 font-medium italic">
-                    We are proud to partner with the Philippine Public Service
-                    Leadership Awards program. Its crucial to recognize and
-                    celebrate the outstanding contributions of public servants
-                    who are making a real difference in the lives of Filipinos.
-                    This program fosters a culture of excellence and inspires
-                    future generations of leaders to dedicate themselves to
-                    public service.
+                    &quot;We are proud to partner with the Philippine Public
+                    Service Leadership Awards program. Its crucial to recognize
+                    and celebrate the outstanding contributions of public
+                    servants who are making a real difference in the lives of
+                    Filipinos. This program fosters a culture of excellence and
+                    inspires future generations of leaders to dedicate
+                    themselves to public service.&quot;
                   </blockquote>
                   <div>
                     <p className="font-bold text-gray-900">Micheal</p>
