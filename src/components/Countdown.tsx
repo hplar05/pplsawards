@@ -94,7 +94,7 @@ export function Countdown() {
   // }
 
   return (
-    <div className="flex flex-col items-center justify-center space-y-4 bg-white bg-opacity-80 rounded-lg p-4 shadow-lg">
+    <div className="flex flex-col items-center justify-center space-y-4   p-4 ">
       {countdownData.description && (
         <h2 className="text-2xl font-bold">{countdownData.description}</h2>
       )}

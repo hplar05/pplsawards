@@ -3,6 +3,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import {
+  ArrowRight,
   Award,
   CheckCircle,
   ChevronRight,
@@ -84,72 +85,93 @@ export default function Home() {
         className="flex flex-col min-h-screen"
       >
         <main className="flex-1">
-          <section className="relative bg-gradient-to-r from-yellow-400 via-yellow-300 to-yellow-200 py-20 md:py-32 mb-[10rem]">
-            <div className="container mx-auto px-4 md:px-6">
-              <div className="flex flex-col items-center text-center">
-                <motion.h1
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5 }}
-                  className="text-4xl md:text-6xl font-bold text-gray-900 mb-6"
-                >
-                  Celebrating Excellence in Every Field
-                </motion.h1>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.2 }}
-                  className="text-xl text-gray-800 mb-8 max-w-2xl"
-                >
-                  Join us in honoring outstanding achievements and inspiring
-                  greatness across industries.
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.4 }}
-                  className="mb-8 bg-white rounded-lg shadow-md z-10"
-                >
-                  <Countdown />
-                </motion.div>
-                <motion.p
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.5 }}
-                  className="text-sm text-gray-800 mb-4 z-10"
-                >
-                  Time left until the next award ceremony
-                </motion.p>
-                <motion.div
-                  initial={{ opacity: 0, y: 20 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.5, delay: 0.6 }}
-                  className="flex space-x-4 z-10 mt-3"
-                >
-                  <Link
-                    href="/contact"
-                    className="bg-gray-900 text-white px-6 py-3 rounded-full font-semibold hover:bg-gray-600 transition duration-300"
-                  >
-                    Get Started
-                  </Link>
-                  <Link
-                    href="/criteria"
-                    className="bg-yellow-600 text-white px-6 py-3 rounded-full font-semibold hover:bg-yellow-400 transition duration-300"
-                  >
-                    Learn More
-                  </Link>
-                </motion.div>
+          <section className="min-h-screen pt-[4rem] relative overflow-hidden bg-gradient-to-b from-gray-50 to-white">
+            <div className="absolute inset-0 bg-gradient-to-br from-secondary/30 to-transparent" />
+
+            <div className="container mx-auto px-4 pt-12 pb-24">
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+                <div className="relative z-10 space-y-8">
+                  <div className="inline-block bg-primary/10 px-4 py-2 rounded-full">
+                    <span className="text-primary font-medium tracking-wider text-sm">
+                      Philippine Public Service Leadership Awards
+                    </span>
+                  </div>
+
+                  <h1 className="font-serif text-4xl md:text-5xl lg:text-6xl leading-tight text-gray-900">
+                    <span className="block text-yellow-600">Celebrating</span>
+                    <span className="block text-yellow-500 ">Excellence</span>
+                    <span className="block ">in Public Service.</span>
+                  </h1>
+
+                  <div className="text-lg md:text-xl text-gray-600 leading-relaxed max-w-xl">
+                    Join us in honoring outstanding achievements and inspiring
+                    greatness across the world.
+                    <span className="block mt-2">
+                      Time left until the next award ceremony.
+                    </span>
+                    <div className=" lg:w-[58%] xl:w-[47%] md:w-[48%] max-md:w-[48%] max-sm:w-[68%] sm:w-[68%]">
+                      <Countdown />
+                    </div>
+                  </div>
+
+                  <div className="flex flex-col sm:flex-row gap-4">
+                    <Button
+                      size="lg"
+                      className="bg-yellow-600 hover:bg-yellow-700 text-white px-8 rounded-full"
+                    >
+                      <a
+                        href="https://docs.google.com/forms/d/e/1FAIpQLSdSfM1xhN655LhT6H5oRfa_6cr-jeISNXxesy6kPa_CPV4cKg/viewform"
+                        target="_blank"
+                      >
+                        Get Started
+                      </a>
+                    </Button>
+                    <Link href="/about" className="max-md:hidden">
+                      <Button
+                        size="lg"
+                        variant="outline"
+                        className="border-primary text-primary hover:bg-primary hover:text-white rounded-full"
+                      >
+                        Learn More
+                      </Button>
+                    </Link>
+                  </div>
+                </div>
+
+                <div className="relative">
+                  <div className="relative aspect-square max-w-md mx-auto">
+                    <Image
+                      src="/header-image.jpg"
+                      alt="Header"
+                      fill
+                      className="object-contain transform hover:scale-105 transition-transform duration-500"
+                      priority
+                    />
+                  </div>
+
+                  <div className="absolute top-1/4 -right-1/4 w-72 h-72 bg-primary/5 rounded-full blur-3xl" />
+                  <div className="absolute bottom-1/4 -left-1/4 w-72 h-72 bg-secondary/30 rounded-full blur-3xl" />
+
+                  <div className="absolute top-8 right-8 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
+                    <span className="text-primary font-medium">
+                      Philippine Public
+                    </span>
+                  </div>
+                  <div className="absolute bottom-8 left-8 bg-white/90 backdrop-blur-sm rounded-full px-4 py-2 shadow-lg">
+                    <span className="text-primary font-medium">
+                      Service Leadership Awards
+                    </span>
+                  </div>
+                </div>
               </div>
             </div>
-            <div className="absolute bottom-0 left-0 right-0 z-0">
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-                <path
-                  fill="#ffffff"
-                  fillOpacity="1"
-                  d="M0,96L48,112C96,128,192,160,288,160C384,160,480,128,576,112C672,96,768,96,864,112C960,128,1056,160,1152,160C1248,160,1344,128,1392,112L1440,96L1440,320L1392,320C1344,320,1248,320,1152,320C1056,320,960,320,864,320C768,320,672,320,576,320C480,320,384,320,288,320C192,320,96,320,48,320L0,320Z"
-                ></path>
-              </svg>
-            </div>
+
+            {/* <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2">
+              <div className="flex flex-col items-center gap-2">
+                <span className="text-sm text-gray-600">Scroll</span>
+                <div className="w-px h-8 bg-gradient-to-b from-primary to-transparent" />
+              </div>
+            </div> */}
           </section>
 
           <section

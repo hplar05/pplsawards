@@ -35,7 +35,7 @@ export function Navbar() {
             width={50}
             className="h-12 w-12"
           />
-          <span className="font-bold text-2xl md:text-xl tracking-wide text-gray-700 dark:text-gray-200">
+          <span className="font-bold text-2xl md:text-xl tracking-wide text-black dark:text-gray-200">
             PPSL<span className="text-yellow-500">AWARDS</span>
           </span>
         </Link>
