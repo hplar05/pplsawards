@@ -154,7 +154,7 @@ export default function Home() {
 
           <section
             id="about"
-            className="py-24 bg-white relative overflow-hidden"
+            className="py-24 bg-white relative overflow-hidden min-h-screen"
           >
             <div className="container mx-auto px-4">
               <div className="max-w-xl mx-auto text-center mb-16">
