@@ -109,7 +109,7 @@ export default function Home() {
                     <span className="block mt-2">
                       Time left until the next award ceremony.
                     </span>
-                    <div className=" lg:w-[58%] xl:w-[47%] md:w-[48%] max-md:w-[48%] max-sm:w-[68%] sm:w-[68%]">
+                    <div className=" lg:w-[58%] xl:w-[47%] md:w-[48%] max-md:w-[100%] max-sm:w-[100%]">
                       <Countdown />
                     </div>
                   </div>
