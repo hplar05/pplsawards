@@ -46,19 +46,6 @@ function AwardeeModal({
   return (
     <Dialog open={isOpen} onOpenChange={onClose}>
       <DialogContent className="sm:max-w-[600px] bg-white rounded-lg overflow-hidden">
-        <DialogHeader>
-          <DialogTitle className="text-2xl font-bold text-yellow-600">
-            {awardee.fullname}
-          </DialogTitle>
-          <DialogClose asChild>
-            <Button
-              variant="ghost"
-              className="absolute right-4 top-4 rounded-full p-2"
-            >
-              <X className="h-4 w-4" />
-            </Button>
-          </DialogClose>
-        </DialogHeader>
         <div className="grid gap-6 py-4">
           <div className="relative h-80 w-full">
             <Image
@@ -69,13 +56,15 @@ function AwardeeModal({
               className="rounded-lg"
             />
           </div>
-          <div className="grid grid-cols-2 gap-4">
+          {/* <div className="grid grid-cols-2 gap-4">
             <div className="space-y-2">
-              <p className="font-semibold text-gray-600">Occupation</p>
+              <p className="font-semibold text-gray-600">
+                Public Service Occupation
+              </p>
               <p>{awardee.occupation}</p>
             </div>
             <div className="space-y-2">
-              <p className="font-semibold text-gray-600">Area</p>
+              <p className="font-semibold text-gray-600">Public Service Area</p>
               <p>{awardee.area}</p>
             </div>
             <div className="space-y-2">
@@ -86,11 +75,11 @@ function AwardeeModal({
               <p className="font-semibold text-gray-600">Category</p>
               <p>{awardee.categories}</p>
             </div>
-          </div>
-          <div className="space-y-2">
+          </div> */}
+          {/* <div className="space-y-2">
             <p className="font-semibold text-gray-600">Description</p>
             <p className="text-gray-700">{awardee.description}</p>
-          </div>
+          </div> */}
         </div>
       </DialogContent>
     </Dialog>
@@ -110,7 +99,7 @@ export default function AwardeesPage() {
   useEffect(() => {
     const fetchAwardees = async () => {
       try {
-        const response = await fetch("/api/awardees");
+        const response = await fetch("/api/awardees?limit=100&sort=desc");
         if (!response.ok) {
           throw new Error("Failed to fetch awardees");
         }
@@ -261,9 +250,9 @@ export default function AwardeesPage() {
                     <MapPin className="mr-2" size={16} />
                     <span>{awardee.area}</span>
                   </div>
-                  <p className="mb-4 text-gray-700 line-clamp-3">
+                  {/* <p className="mb-4 text-gray-700 line-clamp-3">
                     {awardee.description}
-                  </p>
+                  </p> */}
                   <div className="flex items-center justify-between text-sm">
                     <div className="flex items-center text-yellow-600">
                       <Briefcase className="mr-2" size={16} />

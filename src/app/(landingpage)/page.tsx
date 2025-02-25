@@ -37,17 +37,12 @@ export default function Home() {
     const fetchData = async () => {
       try {
         // Fetch recent winners
-        const response = await fetch("/api/awardees?limit=8&sort=desc");
+        const response = await fetch("/api/awardees?limit=10&sort=desc");
         if (!response.ok) {
           throw new Error("Failed to fetch recent winners");
         }
         const data = await response.json();
         setRecentWinners(data);
-
-        // Add any other data fetching operations here
-        // For example:
-        // await fetchPartners();
-        // await fetchTestimonials();
       } catch (err) {
         setError("Failed to load data. Please try again later.");
       } finally {
