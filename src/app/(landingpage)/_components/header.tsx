@@ -30,12 +30,12 @@ export const Header = () => {
               <span className="block mt-2">
                 Time left until the next award ceremony.
               </span>
-              <div className=" lg:w-[58%] xl:w-[47%] md:w-[48%] max-md:w-[100%] max-sm:w-[100%]">
+              <div className=" lg:w-[58%] xl:w-[47%] md:w-[48%] max-sm:w-[100%]">
                 <Countdown />
               </div>
             </div>
 
-            <div className="flex flex-col sm:flex-row gap-4">
+            <div className="flex flex-col md:flex-row gap-4">
               <Button
                 size="lg"
                 className="bg-yellow-600 hover:bg-yellow-700 text-white px-8 rounded-full"
