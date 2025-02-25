@@ -47,15 +47,14 @@ export const Header = () => {
                   Get Started
                 </a>
               </Button>
-              <Link href="/about" className="max-md:hidden">
-                <Button
-                  size="lg"
-                  variant="outline"
-                  className="border-primary text-primary hover:bg-primary hover:text-white rounded-full"
-                >
-                  Learn More
-                </Button>
-              </Link>
+
+              <Button
+                size="lg"
+                variant="outline"
+                className="border-primary text-primary hover:bg-primary hover:text-white rounded-full"
+              >
+                Learn More
+              </Button>
             </div>
           </div>
 
