@@ -18,6 +18,7 @@ import { LogoCarousel } from "@/components/LogoCarousel";
 import { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Button } from "@/components/ui/button";
+import { Popup } from "@/components/Popup";
 
 type Awardee = {
   id: string;
@@ -32,6 +33,7 @@ export default function Home() {
   const [isLoading, setIsLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
   const [pageLoading, setPageLoading] = useState(true);
+  const [isPopupOpen, setIsPopupOpen] = useState(false);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -60,6 +62,14 @@ export default function Home() {
     return () => clearTimeout(timer);
   }, []);
 
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setIsPopupOpen(true);
+    }, 3000); // Show popup after 3 seconds
+
+    return () => clearTimeout(timer);
+  }, []);
+
   // if (pageLoading) {
   //   return (
   //     <div className="min-h-screen flex items-center justify-center">
@@ -72,6 +82,7 @@ export default function Home() {
   targetDate.setDate(targetDate.getDate() + 30);
   return (
     <AnimatePresence>
+      <Popup isOpen={isPopupOpen} onClose={() => setIsPopupOpen(false)} />
       <motion.div
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
