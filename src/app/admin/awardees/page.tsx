@@ -46,7 +46,7 @@ export default function AwardeesPage() {
   }, []);
 
   const fetchAwardees = async () => {
-    const response = await fetch("/api/awardees");
+    const response = await fetch("/api/awardees?limit=100&sort=desc");
     const data = await response.json();
     setAwardees(data);
   };
