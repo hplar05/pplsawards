@@ -18,7 +18,7 @@ const navItems = [
 ];
 
 export function Navbar() {
-  const pathname = usePathname(); // Get the current pathname
+  const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const toggleMenu = () => {
@@ -79,8 +79,6 @@ export function Navbar() {
             className="md:hidden bg-white border-t"
           >
             <nav className="flex flex-col py-4 space-y-2">
-              {" "}
-              {/* Added space-y-2 for better vertical spacing */}
               {navItems.map((item) => (
                 <Link
                   key={item.href}

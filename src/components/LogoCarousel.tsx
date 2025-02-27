@@ -43,7 +43,6 @@ export function LogoCarousel() {
     return <div className="text-center py-8 text-red-500">{error}</div>;
   }
 
-  // Duplicate the partners array to create a seamless loop
   const loopedPartners = [...partners, ...partners];
 
   return (

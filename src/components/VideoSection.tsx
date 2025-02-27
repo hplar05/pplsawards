@@ -19,7 +19,7 @@ export function VideoSection() {
         const response = await fetch("/api/video-presentation");
         const data = await response.json();
         if (data.length > 0) {
-          setPresentation(data[0]); // Assuming we want to display the first video
+          setPresentation(data[0]);
         }
       } catch (error) {
         console.error("Failed to fetch video presentation:", error);

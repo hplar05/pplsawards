@@ -115,7 +115,6 @@ export default function AwardeesPage() {
       <header className="text-black py-12">
         <div className="container mx-auto px-4">
           <h1 className="text-4xl font-bold flex items-center">
-            {/* <Handshake className="mr-4 max-md:hidden" size={40} /> */}
             Manage Awardees
           </h1>
         </div>
